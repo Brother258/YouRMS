@@ -692,6 +692,17 @@ const teacherFull = {
       return courseObj.days.split("&").map(x => x.trim());
     }
 
+
+
+
+
+
+
+    
+
+/*
+
+    
     // New function to merge adjacent time slots for labs
     function mergeTimeSlots(timeSlotStrings) {
       if (!Array.isArray(timeSlotStrings) || timeSlotStrings.length === 0) {
@@ -735,6 +746,18 @@ const teacherFull = {
 
       return merged.map(slot => `${formatMinToTime(slot.start)} - ${formatMinToTime(slot.end)}`);
     }
+
+    */
+
+
+
+
+
+
+
+
+
+    
 
     // Modified findConflict to handle multiple time slots and use updated extractDays
     function findConflict(newE, courseKey) {
@@ -1096,7 +1119,7 @@ const teacherFull = {
         let { value: courseId } = await Swal.fire({
           title: 'Add a course',
           input: 'text',
-          inputPlaceholder: 'Enter course ID (e.g. CSE 2101) without .json',
+          inputPlaceholder: 'Enter course ID (e.g. CSE 2101)',
           showCancelButton: true,
           inputValidator: (value) => {
             if (!value) return 'Course ID cannot be empty';
@@ -1197,3 +1220,4 @@ function restartApp() {
 
 
   </script>
+
