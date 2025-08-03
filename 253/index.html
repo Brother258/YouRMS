@@ -421,22 +421,202 @@
     let data = {};
 
     // — Teacher Full Names Map (unchanged) —
-    const teacherFull = {
-      "AKA": "T.M. Abul Kalam Azad",
-      "TBA": "To Be Announced",
-      "MNMA": "Md. Nazmul Abdal",
-      "RaiK": "Raihan Kibria",
-      "FK": "Fatema Khan",
-      "NTNH": "Nazifa Tasnin Hia",
-      "MAP": "Md. Aktaruzzaman Pramanik",
-      "FTZC": "Fariha-Tuz Zahra Chowdhury",
-      "RS": "Rajia Sultana",
-      "AmiS": "Amio Sadman",
-      "IrM": "Iram Mehrin",
-      "ShahA": "Shaheen Ara",
-      "FHS": "Faheem HaSAn Shahed",
-      "TazA": "Tazin Ahmed"
-    };
+const teacherFull = {
+  "AKA": "T.M. Abul Kalam Azad",
+  "TBA": "To Be Announced",
+  "MNMA": "Md. Nazmul Abdal",
+  "RaiK": "Raihan Kibria",
+  "FK": "Fatema Khan",
+  "NTNH": "Nazifa Tasnin Hia",
+  "MAP": "Md. Aktaruzzaman Pramanik",
+  "FTZC": "Fariha-Tuz Zahra Chowdhury",
+  "RS": "Rajia Sultana",
+  "AmiS": "Amio Sadman",
+  "IrM": "Iram Mehrin",
+  "ShahA": "Shaheen Ara",
+  "FHS": "Faheem HaSAn Shahed",
+  "TazA": "Tazin Ahmed",
+
+  // Newly added
+  "AAhM": "Azaz Ahmed",
+  "DMMH": "Md. Mahadhi Hasann",
+  "KHH": "Kaiser Hamidul Huq",
+  "MIUK": "Muhammed Ihsan-Ul-Kabir",
+  "NeG": "Neha Ghose",
+  "SAdA": "Barrister Saad Andalib Aaistu",
+  "SQC": "Selima Quader Chowdhury",
+
+  "AAMM": "Abdullah Al Mahmud",
+  "DSWA": "Sarwar Ahmed",
+  "KAMRH": "K.A.M. Rifat Hasan",
+  "MK": "Moinak Kanungo",
+  "NFH": "Nafia Haque",
+  "SadK": "Sadia Khalid",
+  "SRAL": "Syeda Reshma Akter Laboni",
+
+  "AAR": "Ahmed Abidur Razzaque Khan (GED)",
+  "DZUR": "Zoeb-Ur-Rahman",
+  "KAS": "Kamar Ahmad Simon",
+  "MKB": "Milon Kumar Bhattacharjee",
+  "NIH": "Nishat Hamid",
+  "SahH": "Sahadat Hossain",
+  "SRZ": "Shamim Reza",
+
+  "AB": "Abdul Baten",
+  "EAZ": "Ekhtear Ahmed Zeeshan",
+  "KKK": "Kabya Kritthika",
+  "MKU": "Md Kamal Uddin",
+  "NIUR": "Nayem Imtiaz Uddin Raju",
+  "SahibH": "Sahib Hossain",
+  "SSMJ": "Syeda Sadia Mehjabin (MSJ)",
+
+  "ABM": "Abdul Mannan",
+  "FDAK": "Ferdousi Ara Khatun",
+  "KKS": "Krishna Kumar Saha",
+  "MLM": "Md. LAwha Mahfuz",
+  "NMK": "Naima Khatun",
+  "SakH": "Sakib Hossain",
+  "STHK": "Sk. Tasthekur Hossain Kowshik",
+
+  "AFMM": "A.F.M. Moniruzzaman",
+  "KM": "Kazi Madina",
+  "MM": "Md. Muntasir Mamun",
+  "NNE": "Nazmun Nur Eva",
+  "SAT": "Shirin Akter",
+  "SUAh": "Shamsuddin Ahamad",
+
+  "KMT": "Kazi M. Tarique",
+  "MMP": "Md. Masum Parvez",
+  "NReza": "Nafees Reza",
+  "SaZ": "Sameera Zaman",
+  "SuR": "Sumon Rahman",
+
+  "AMMR": "Al Mahmud Rumman",
+  "FMS": "Faisal Mohammad Shahriar",
+  "LA": "Laboni Akter",
+  "NT": "Nusrat Tajkia (ENG)",
+  "SDA": "Sadia Afrin",
+  "SViA": "Suravi Akhter",
+
+  "ANMFa": "Abu Noor Md Farukh",
+  "GKZ": "GoLAm Kader Zilany",
+  "MaHK": "Mahmud Hasan Khan",
+  "MNUT": "Md Nizam Uddin Tanim",
+  "SDas": "Shatabdi Das",
+  "SWAK": "Shawon Ahmed Kabir",
+
+  "AOMS": "A.O.M. Shamsuddoha",
+  "HaI": "Haseeb Irfanullah",
+  "MaiH": "Mainul Haque",
+  "MoMH": "Mohammed Mozammel Huq",
+  "NUA": "Nasir Uddin Ahmed",
+  "SDH": "Sadia Haque",
+  "TaF": "Tahura Farbin",
+
+  "AR": "Arifa Ghani Rahman",
+  "HBK": "Habiba Kibria",
+  "MAIs": "Md. Aminul Islam",
+  "MosH": "Mosharof Hossainin",
+  "OA": "Oeshwik Ahmed",
+  "TazA": "Tazin Ahmed",
+
+  "ArI": "Arzoo Ismail",
+  "HMR": "Syed Hasib M. Rahman",
+  "MAJB": "Md. Arifujjaman Babu",
+  "MRBR": "Md. Redwan Bin Rahman",
+  "ORS": "Oliur Rahman Sun",
+  "SharN": "Sharminur Nahar",
+  "THR": "Tawhid Reaz, Coordinator EMBA",
+
+  "ARS": "Asma Royhana Sarkar",
+  "HRK": "Harunur Rashid Khan",
+  "MaN": "Mahmudunnabi",
+  "MRMA": "Miduri Rahman Atoshee",
+  "PFQ": "Paromita Fairuz Quarishi",
+  "SHJ": "Shahnaj Husne Jahan",
+  "TJI": "Tahamina Jahan Imran",
+
+  "ASAr": "Abu Sayeed Arif",
+  "IH": "Imran Hossain",
+  "MASQ": "M.Ali Siddiquee",
+  "MSAC": "Md. Saiful Alam Chowdhury",
+  "PH": "Parveen Huda",
+  "ShS": "Shubhankar Shil",
+  "TKDas": "Tusher Kanti Das",
+
+  "ASMR": "Abu Saleh Mohammad Rafi",
+  "MAWA": "Md. Anowarul Abedin",
+  "MSH": "Md. Sazzad Hossainin",
+  "PMR": "Parvez Mahmud Rajib",
+  "SJMF": "Sanjana Mustafa",
+  "TRM": "Tasnova Rahman",
+
+  "ASU": "Ahsann Ullah",
+  "ITH": "Irtifa Haasn",
+  "MAzn": "Muhammad Aminuzzaman",
+  "MSIK": "M Shahidul Islam Khondaker",
+  "SJSQ": "Shah Jafor Sadeek Quaderi",
+  "TRoy": "Tonoy Roy",
+
+  "AT": "Anika Tahsin",
+  "JFR": "Jannatul Ferdous Ruma",
+  "MCy": "Mehek Chowdhury",
+  "MSMM": "Mohammad Sultan Mahmud",
+  "RHF": "Rubaiya Hafiz",
+  "SKHS": "Sakib Hasan Siddiqui",
+  "TSZK": "Towsif Zahin Khan",
+
+  "ATIA": "Antara Ibnat Audhaya",
+  "KAM": "Kader Abdul Muhammad",
+  "MDI": "Md. Didarul Islam",
+  "MSNR": "Md. Shahinur Rahman",
+  "RKH": "Rakib Hasan",
+  "SKTR": "Shawkat Tanveer Rahman",
+  "UAJ": "Umana Anjalin",
+
+  "AUK": "Anirudha Kahaly",
+  "MdKH": "Md Kaviul Hossain",
+  "MSS": "Md. Shawn Sheikh",
+  "RMC": "Rafiq Um Munir Chowdhury",
+  "SLA": "Sadia Lena Alfee",
+  "UH": "Ummay Habiba",
+
+  "AvH": "ABantee Harun",
+  "MGK": "Mohammad Golam Kibria",
+  "MTIs": "Muzhataba Tawkeer Islam",
+  "SMJ": "Sirajum Munira Joti",
+  "UKA": "Uttam Karmaker Aurko",
+
+  "AzH": "Azizul Haque",
+  "MHH": "Muhammad Hasibul Hasan",
+  "MTUS": "Md. Taufiq Us Samad",
+  "RSC": "Rukhsana Choudhury",
+  "SMMR": "S M Mahbubur Rahman",
+  "WA": "Wazir Ahmad",
+
+  "BAK": "Begum Akter Kamal",
+  "MHHr": "MH Haidar",
+  "MUAh": "Mahtab Uddin Ahmed",
+  "RWAIK": "Rezwan Al Islam Khan",
+  "WFU": "Wahida Ferdose Urmi",
+
+  "BCB": "Bikash Chandra Bhowmick",
+  "MinUA": "Minhaz Uddin Ahmed",
+  "MZRM": "Md Ziaur Rahman",
+  "SA": "Shajedul ALAm",
+  "WH": "Wahidur Habib",
+
+  "DS": "Shourav Sikder",
+  "NafM": "Nafees Monsoor",
+  "SABQ": "SArkar Barbaq Quarmal",
+
+  "NAJ": "Nayma Akhter Jahan",
+  "SAC": "Shahana Afrose Chowdhury",
+
+  "NaR": "Nadia Rahman",
+  "NBS": "Nibras Bin SAyed"
+};
+
 
     // — Exam Rules (unchanged) —
     const examRules = [
@@ -1014,5 +1194,6 @@ function restartApp() {
     }
   });
 }
+
 
   </script>
