@@ -2,14 +2,14 @@ javascript:(function() {
     const courseIDsInput = prompt("Enter course IDs separated by commas (e.g., cse 2101, cse 2102, cse 2103):");
 
     if (!courseIDsInput) {
-        return; // User cancelled
+        return; // User cancel
     }
 
     const courseIDs = courseIDsInput.split(',').map(id => id.trim());
     const failedCourses = []; // To store courses that failed
 
     let i = 0;
-    const actionDelay = 700; // Adjusted delay slightly to give more time for page updates
+    const actionDelay = 700; // Adjusted delay 
     const elementCheckTimeout = 15000; // Increased timeout for element appearance
 
     // Function to wait for an element or a specific error message
@@ -71,7 +71,7 @@ javascript:(function() {
             // 2. Click search button
             searchBtn.click();
 
-            // 3. Wait for either the download button or the error message to appear
+            // 3. Wait for the download button or the error message
             try {
                 const result = await waitForElementOrError('#downloadBtn', 'p[style*="color:red"]', elementCheckTimeout);
 
@@ -79,7 +79,7 @@ javascript:(function() {
                     const downloadBtn = result.element;
                     console.log(`Download button found for ${currentCourseID}.`);
 
-                    // Give a small delay after button appears before clicking
+                    // small delay after button appears before clicking
                     await new Promise(resolve => setTimeout(resolve, actionDelay));
 
                     // 4. Click download button
@@ -98,15 +98,15 @@ javascript:(function() {
                     failedCourses.push(currentCourseID);
 
                     // Click reset button if there was an error to clear the state for the next search
-                    // This is important because the error message might prevent future searches
+
                     resetBtn.click();
                     await new Promise(resolve => setTimeout(resolve, actionDelay));
                 }
 
-                // Move to the next course ID after a short delay for either success or failure
+                // Move to the next course ID after a short delay 
                 i++;
                 await new Promise(resolve => setTimeout(resolve, actionDelay));
-                automateCourseProcessing(); // Call recursively for the next course
+                automateCourseProcessing(); // Call recursively the next course
 
             } catch (error) {
                 alert(`Critical error during processing of ${currentCourseID}: ${error.message}. Automation stopped.`);
@@ -118,7 +118,7 @@ javascript:(function() {
             let completionMessage = "All course IDs processed!";
             if (failedCourses.length > 0) {
                 completionMessage += `\n\nThe following course codes failed to download: ${failedCourses.join(', ')}`;
-                alert(completionMessage); // Use alert for clear visibility of failures
+                alert(completionMessage);
             } else {
                 alert(completionMessage);
             }
@@ -128,4 +128,5 @@ javascript:(function() {
     }
 
     automateCourseProcessing();
+
 })();
