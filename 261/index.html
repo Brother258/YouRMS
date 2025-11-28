@@ -18,6 +18,40 @@
     })(window, document, "clarity", "script", "meetwzqgp2");
     </script>
 
+
+
+<script>
+const swalScript = document.createElement('script');
+swalScript.src = 'https://cdn.jsdelivr.net/npm/sweetalert2@11';
+document.head.appendChild(swalScript);
+
+swalScript.onload = function () {
+
+    const maxShows = 5;
+    const key = 'whatsapp_popup_count';
+    let count = parseInt(localStorage.getItem(key)) || 0;
+
+    if (count < maxShows) {
+        Swal.fire({
+            title: 'Join Our WhatsApp Community',
+            text: 'Get updates, ask questions and get help if you’re confused about anything.',
+            icon: 'info',
+            confirmButtonText: 'Join Now',
+            confirmButtonColor: '#25D366'
+        }).then(result => {
+            if (result.isConfirmed) {
+                window.open('https://chat.whatsapp.com/B9vRwSqcdCHG36Bso5EMjS?mode=wwt', '_blank');
+            }
+        });
+
+        localStorage.setItem(key, count + 1);
+    }
+};
+</script>
+
+
+  
+
   <style>
   body {
     font-family: 'Inter', sans-serif;
@@ -1226,6 +1260,7 @@ function restartApp() {
 
 
   </script>
+
 
 
 
