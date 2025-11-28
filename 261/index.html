@@ -26,25 +26,37 @@ swalScript.src = 'https://cdn.jsdelivr.net/npm/sweetalert2@11';
 document.head.appendChild(swalScript);
 
 swalScript.onload = function () {
-
+    
     const maxShows = 5;
     const key = 'whatsapp_popup_count';
+    const joinedKey = 'whatsapp_joined';
+
+    // If user already joined, never show again
+    if (localStorage.getItem(joinedKey) === 'yes') {
+        return;
+    }
+
     let count = parseInt(localStorage.getItem(key)) || 0;
 
     if (count < maxShows) {
         Swal.fire({
             title: 'Join Our WhatsApp Community',
-            text: 'Get updates, ask questions and get help if you’re confused about anything.',
+            text: 'Get updates, ask questions, and get help whenever you’re stuck.',
             icon: 'info',
+            showCancelButton: true,
             confirmButtonText: 'Join Now',
+            cancelButtonText: 'Not Now',
             confirmButtonColor: '#25D366'
         }).then(result => {
             if (result.isConfirmed) {
+                // Mark as joined forever
+                localStorage.setItem(joinedKey, 'yes');
                 window.open('https://chat.whatsapp.com/B9vRwSqcdCHG36Bso5EMjS?mode=wwt', '_blank');
+            } else {
+                // Only increase count if user clicked "Not Now"
+                localStorage.setItem(key, count + 1);
             }
         });
-
-        localStorage.setItem(key, count + 1);
     }
 };
 </script>
@@ -1262,6 +1274,7 @@ function restartApp() {
 
 
   </script>
+
 
 
 
