@@ -299,11 +299,38 @@ function renderShareControls() {
     // Only render if empty to avoid duplicates (though renderSelected clears grid, it doesn't clear this container)
     // Actually renderSelected calls this every time, so we should clear and rebuild or check existence.
     // Since renderSelected is called on updates, we should rebuild to ensure state is correct.
+    
+    // Inject responsive styles if not present
+    if (!document.getElementById('share-styles')) {
+        const style = document.createElement('style');
+        style.id = 'share-styles';
+        style.textContent = `
+            @media (max-width: 576px) {
+                #share-actions {
+                    width: 100%;
+                    margin-top: 10px;
+                    display: flex;
+                    gap: 10px !important;
+                }
+                #share-actions button {
+                    flex: 1;
+                    padding: 10px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 8px;
+                    font-size: 1rem;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
     container.innerHTML = `
-        <button class="btn btn-outline-success btn-sm" onclick="getShareLink()" title="Share Schedule">
+        <button class="btn btn-outline-success" onclick="getShareLink()" title="Share Schedule">
             <i class="fas fa-share-alt"></i> Share
         </button>
-        <button class="btn btn-outline-info btn-sm" onclick="downloadScheduleImage()" title="Download Image">
+        <button class="btn btn-outline-info" onclick="downloadScheduleImage()" title="Download Image">
             <i class="fas fa-download"></i> Image
         </button>
     `;
