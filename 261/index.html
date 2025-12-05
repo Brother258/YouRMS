@@ -1257,8 +1257,8 @@ const teacherFull = {
           cancelButtonText: 'No'
         });
         if (!isConfirmed){
-			await new Promise(r => setTimeout(r, 50));
-			break;
+			  location.reload()
+  			  return
 		}
       }
       if (added.length > 0) {
