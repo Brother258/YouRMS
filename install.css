@@ -8,6 +8,8 @@
         color: #fff;
         padding: 15px; /* Reduce padding for a smaller prompt */
         text-align: center;
+        z-index: 999999999999999999 !important; /* extremely high z-index */
+
     }
 
     .install-prompt-content {
