@@ -112,8 +112,7 @@ YouRMS/
 │   ├── course_name.js     # Course name mappings
 │   ├── search.js          # Search functionality
 │   └── share.js           # Sharing features
-├── index.html             # Landing page
-├── admin.js               # Admin functionality
+├── index.html             # Landing page               
 ├── manifest.json          # PWA manifest
 ├── installer.js           # PWA installation handler
 ├── YouRMS-banner.png      # Banner image
@@ -197,6 +196,6 @@ If you have any questions or need help, please:
   
   **⭐ Star this repo if you find it helpful! ⭐**
   
-  Made with ❤️ for ULAB Students
+  Made with ❤️ for ULAB Students by Shahriar
   
 </div>
