@@ -847,6 +847,20 @@ const teacherFull = {
       
       return [start, end];
     }
+
+    function normalizeDayToken(day) {
+      const raw = (day || '').toString().trim().toLowerCase().replace(/\./g, '');
+      const map = {
+        sun: 'Sun', sunday: 'Sun',
+        mon: 'Mon', monday: 'Mon',
+        tue: 'Tue', tues: 'Tue', tuesday: 'Tue',
+        wed: 'Wed', weds: 'Wed', wednesday: 'Wed',
+        thu: 'Thu', thur: 'Thu', thurs: 'Thu', thursday: 'Thu',
+        fri: 'Fri', friday: 'Fri',
+        sat: 'Sat', saturday: 'Sat'
+      };
+      return map[raw] || (day || '').toString().trim();
+    }
     
     function extractDays(courseObj) { 
       const isLab = courseObj.isLab; 
@@ -865,9 +879,9 @@ const teacherFull = {
       
       if (courseObj.days.includes("<mark>")) {
         let tmp = document.createElement("div"); tmp.innerHTML = courseObj.days;
-        return [...tmp.querySelectorAll("mark")].map(x => x.textContent.trim());
+        return [...tmp.querySelectorAll("mark")].map(x => normalizeDayToken(x.textContent));
       }
-      return courseObj.days.split("&").map(x => x.trim());
+      return courseObj.days.split("&").map(x => normalizeDayToken(x));
     }
 
 
