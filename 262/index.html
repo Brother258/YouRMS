@@ -1454,6 +1454,13 @@ const teacherFull = {
             const input = Swal.getInput();
             if (!input) return;
 
+            // Prevent browser history/autofill suggestions from appearing.
+            input.setAttribute('autocomplete', 'off');
+            input.setAttribute('autocorrect', 'off');
+            input.setAttribute('autocapitalize', 'off');
+            input.setAttribute('spellcheck', 'false');
+            input.name = `course-code-${Date.now()}`;
+
             const listId = 'course-code-suggestions';
             let dl = document.getElementById(listId);
             if (dl) dl.remove();
