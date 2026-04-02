@@ -1,0 +1,23 @@
+{
+    "name": "YouRMS ~ Your Routine Making System",
+    "short_name": "YouRMS",
+    "icons": [
+        {
+            "src": "https://yourms.netlify.app/yourms-icon.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "https://yourms.netlify.app/yourms-icon.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "theme_color": "#00AEEF",
+    "background_color": "#FFFFFF",
+    "display": "standalone",
+    "prefer_related_applications": true,
+    "start_url": "https://yourms.netlify.app"
+}
