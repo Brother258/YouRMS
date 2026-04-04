@@ -1362,9 +1362,10 @@ function getLabDayFromTeacher(teacherText) {
   }
 
   if (isLab) {
-    const labDay = getLabDayFromTeacher(teacherText);
-    if (labDay) return labDay;
-  }
+  const labDay = getLabDayFromTeacher(teacherText);
+  if (labDay) return labDay;
+  return normalizeDayToken(raw.split('&')[0]);
+}
 
   return raw
     .replace(/Sun\s*&\s*Tue/i, 'Sun & Tue')
