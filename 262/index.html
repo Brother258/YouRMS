@@ -861,29 +861,80 @@ const teacherFull = {
       };
       return map[raw] || (day || '').toString().trim();
     }
-    
-    function extractDays(courseObj) { 
-      const isLab = courseObj.isLab; 
-      if (isLab) {
-        const teacherDayMatch = courseObj.teacher.match(/\(([A-Za-z]+)\)/);
-        if (teacherDayMatch && teacherDayMatch[1]) {
-          const dayMap = {
-            'S': 'Sun', 'M': 'Mon', 'T': 'Tue', 'W': 'Wed', 'Th': 'Thu', 'F': 'Fri', 'Sa': 'Sat'
-          };
-          const abbreviation = teacherDayMatch[1];
-          if (dayMap[abbreviation]) {
-            return [dayMap[abbreviation]]; 
-          }
-        }
-      }
-      
-      if (courseObj.days.includes("<mark>")) {
-        let tmp = document.createElement("div"); tmp.innerHTML = courseObj.days;
-        return [...tmp.querySelectorAll("mark")].map(x => normalizeDayToken(x.textContent));
-      }
-      return courseObj.days.split("&").map(x => normalizeDayToken(x));
-    }
 
+
+
+
+	  
+    
+	function extractDays(courseObj) {
+  const isLab = courseObj.isLab;
+
+  // For lab sections, try to read day codes from the teacher field first
+  if (isLab && courseObj.teacher) {
+    const insideParens = courseObj.teacher.match(/\(([^)]*)\)/)?.[1];
+
+    if (insideParens) {
+      const tokens = insideParens
+        .split(/[,/&\s]+/)
+        .map(t => t.trim())
+        .filter(Boolean);
+
+      const dayMap = {
+        S: 'Sun',
+        SUN: 'Sun',
+        SUNDAY: 'Sun',
+
+        M: 'Mon',
+        MON: 'Mon',
+        MONDAY: 'Mon',
+
+        T: 'Tue',
+        TUE: 'Tue',
+        TUES: 'Tue',
+        TUESDAY: 'Tue',
+
+        W: 'Wed',
+        WED: 'Wed',
+        WEDNESDAY: 'Wed',
+
+        TH: 'Thu',
+        THU: 'Thu',
+        THUR: 'Thu',
+        THURS: 'Thu',
+        THURSDAY: 'Thu',
+
+        F: 'Fri',
+        FRI: 'Fri',
+        FRIDAY: 'Fri',
+
+        SA: 'Sat',
+        SAT: 'Sat',
+        SATURDAY: 'Sat'
+      };
+
+      const days = tokens
+        .map(t => dayMap[t.toUpperCase()])
+        .filter(Boolean);
+
+      if (days.length) {
+        return [...new Set(days)];
+      }
+    }
+  }
+
+  // If days are wrapped in <mark>, read each marked day
+  if (courseObj.days && courseObj.days.includes("<mark>")) {
+    let tmp = document.createElement("div");
+    tmp.innerHTML = courseObj.days;
+    return [...tmp.querySelectorAll("mark")].map(x => normalizeDayToken(x.textContent));
+  }
+
+  // Normal case
+  return (courseObj.days || "")
+    .split("&")
+    .map(x => normalizeDayToken(x));
+}
 
 
 
