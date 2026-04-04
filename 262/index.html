@@ -1294,19 +1294,84 @@ const teacherFull = {
       return k === 'GEF 1101' || k === '0231-000-1101';
     }
 
-    function normalizeEntryDays(courseKey, dayText) {
-      const raw = (dayText || '').toString().trim();
-      if (!raw) return 'Unknown Days';
 
-      // GEF1101 special: ENG LAB & ESK rows are Thursday Listening & Speaking.
-      if (isGef1101Family(courseKey) && /ENG\s*LAB\s*&\s*ESK/i.test(raw)) {
-        return 'Thu';
-      }
 
-      return raw
-        .replace(/Sun\s*&\s*Tue/i, 'Sun & Tue')
-        .replace(/Mon\s*&\s*Wed/i, 'Mon & Wed');
-    }
+
+
+function getLabDayFromTeacher(teacherText) {
+  const raw = (teacherText || '').toString();
+  const insideParens = raw.match(/\(([^)]*)\)/)?.[1] || '';
+
+  const tokens = insideParens
+    .split(/[,/&\s]+/)
+    .map(t => t.trim().replace(/\./g, ''))
+    .filter(Boolean);
+
+  const dayMap = {
+    S: 'Sun',
+    SUN: 'Sun',
+    SUNDAY: 'Sun',
+
+    M: 'Mon',
+    MON: 'Mon',
+    MONDAY: 'Mon',
+
+    T: 'Tue',
+    TUE: 'Tue',
+    TUES: 'Tue',
+    TUESDAY: 'Tue',
+
+    W: 'Wed',
+    WED: 'Wed',
+    WEDNESDAY: 'Wed',
+
+    TH: 'Thu',
+    THU: 'Thu',
+    THUR: 'Thu',
+    THURS: 'Thu',
+    THURSDAY: 'Thu',
+
+    F: 'Fri',
+    FRI: 'Fri',
+    FRIDAY: 'Fri',
+
+    SA: 'Sat',
+    SAT: 'Sat',
+    SATURDAY: 'Sat'
+  };
+
+  for (const token of tokens) {
+    const day = dayMap[token.toUpperCase()];
+    if (day) return day;
+  }
+
+  return '';
+} 
+
+
+
+
+	  
+
+    function normalizeEntryDays(courseKey, dayText, teacherText = '', isLab = false) {
+  const raw = (dayText || '').toString().trim();
+  if (!raw) return 'Unknown Days';
+
+  if (isGef1101Family(courseKey) && /ENG\s*LAB\s*&\s*ESK/i.test(raw)) {
+    return 'Thu';
+  }
+
+  if (isLab) {
+    const labDay = getLabDayFromTeacher(teacherText);
+    if (labDay) return labDay;
+  }
+
+  return raw
+    .replace(/Sun\s*&\s*Tue/i, 'Sun & Tue')
+    .replace(/Mon\s*&\s*Wed/i, 'Mon & Wed');
+}
+
+	  
 
     function splitDayTokens(dayText) {
       const txt = (dayText || '').toString().trim();
@@ -1388,24 +1453,24 @@ const teacherFull = {
             sectionsMap[normalizedSection].time = sectionsMap[normalizedSection].time.concat(timeSlots);
             sectionsMap[normalizedSection].isLab = sectionsMap[normalizedSection].isLab || isLabEntry;
             sectionsMap[normalizedSection].dayTimePairs.push({
-              days: normalizeEntryDays(courseKey, entry[3] || 'Unknown Days'),
+              days: normalizeEntryDays(courseKey, entry[3] || 'Unknown Days', entry[2] || 'Unknown Teacher', isLabEntry),
               time: timeSlots
             });
             sectionsMap[normalizedSection].days = mergeDayLabels(
               sectionsMap[normalizedSection].days,
-              normalizeEntryDays(courseKey, entry[3] || 'Unknown Days')
+              normalizeEntryDays(courseKey, entry[3] || 'Unknown Days', entry[2] || 'Unknown Teacher', isLabEntry)
             );
           } else {
             sectionsMap[normalizedSection] = {
               section: rawSection, 
               room: entry[1] || 'Unknown Room',
               teacher: entry[2] || 'Unknown Teacher',
-              days: normalizeEntryDays(courseKey, entry[3] || 'Unknown Days'),
+              days: normalizeEntryDays(courseKey, entry[3] || 'Unknown Days', entry[2] || 'Unknown Teacher', isLabEntry),
               time: timeSlots, 
               isLab: isLabEntry,
               courseKey: courseKey,
               dayTimePairs: [{
-                days: normalizeEntryDays(courseKey, entry[3] || 'Unknown Days'),
+                days: normalizeEntryDays(courseKey, entry[3] || 'Unknown Days', entry[2] || 'Unknown Teacher', isLabEntry),
                 time: timeSlots
               }]
             };
