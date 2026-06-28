@@ -1964,7 +1964,450 @@ function restartApp() {
 }
 </script>
 </body>
+
+	
 </html>
 
+<script>
+(function () {
+  "use strict";
 
-  </script>
+  // ---------- persisted state ----------
+  let facultyRanks = JSON.parse(localStorage.getItem('rb_facultyRanks') || '{}');
+  let rbMaxDays = parseInt(localStorage.getItem('rb_maxDays') || '3', 10) || 3;
+  let rbWindow = JSON.parse(localStorage.getItem('rb_window') || 'null');
+  let rbResults = null;
+
+  const DAY_ORDER = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+  function fmtMin(min) {
+    let hh = Math.floor(min / 60), mm = ((min % 60) + 60) % 60, ap = 'am';
+    if (hh >= 12) ap = 'pm';
+    let h12 = hh % 12; if (h12 === 0) h12 = 12;
+    return `${String(h12).padStart(2, '0')}:${String(mm).padStart(2, '0')} ${ap}`;
+  }
+
+  function teacherCodeOf(entry) {
+    return ((entry && entry.teacher) || '').split(' ')[0] || 'TBA';
+  }
+  function teacherLabelOf(entry) {
+    const code = teacherCodeOf(entry);
+    return (typeof teacherFull !== 'undefined' && teacherFull[code]) || (entry && entry.teacher) || 'TBA';
+  }
+
+  function collectTimePoints() {
+    const starts = new Set(), ends = new Set(), days = new Set();
+    Object.keys(data).forEach(k => {
+      (data[k] || []).forEach(entry => {
+        const slots = Array.isArray(entry.time) ? entry.time : [entry.time];
+        slots.forEach(s => {
+          const r = parseTimeRange(s);
+          if (r && !isNaN(r[0])) starts.add(r[0]);
+          if (r && !isNaN(r[1])) ends.add(r[1]);
+        });
+        extractDays(entry).forEach(d => { if (d) days.add(d); });
+      });
+    });
+    return {
+      starts: [...starts].sort((a, b) => a - b),
+      ends: [...ends].sort((a, b) => a - b),
+      days: DAY_ORDER.filter(d => days.has(d))
+    };
+  }
+
+  function closestTo(arr, target) {
+    if (!arr.length) return null;
+    return arr.reduce((best, v) => Math.abs(v - target) < Math.abs(best - target) ? v : best, arr[0]);
+  }
+
+  // ---------- modal open/close ----------
+  const overlay = document.getElementById('routine-builder-overlay');
+  const openBtn = document.getElementById('routine-builder-btn');
+  const closeBtn = document.getElementById('rb-close');
+
+  function openModal() {
+    const courseKeys = Object.keys(data);
+    document.getElementById('rb-empty').style.display = courseKeys.length === 0 ? 'block' : 'none';
+    document.getElementById('rb-content').style.display = courseKeys.length === 0 ? 'none' : 'block';
+    if (courseKeys.length > 0) {
+      buildFacultyUI(courseKeys);
+      buildLimitsUI();
+    }
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  openBtn.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal(); });
+
+  // ---------- step 1: faculty ranking (click only, no typing) ----------
+  function buildFacultyUI(courseKeys) {
+    const list = document.getElementById('rb-faculty-list');
+    list.innerHTML = '';
+
+    courseKeys.forEach(courseKey => {
+      const entries = data[courseKey] || [];
+      const seen = new Set();
+      const teachers = [];
+      entries.forEach(entry => {
+        const code = teacherCodeOf(entry);
+        if (!seen.has(code)) { seen.add(code); teachers.push(code); }
+      });
+
+      const box = document.createElement('div');
+      box.className = 'rb-faculty-course';
+
+      const title = document.createElement('div');
+      title.className = 'rb-faculty-course-title';
+      title.innerHTML = courseKey + ' <span class="rb-section-count">' + entries.length + ' section' + (entries.length === 1 ? '' : 's') + '</span>';
+      box.appendChild(title);
+
+      const row = document.createElement('div');
+      row.className = 'rb-chip-row';
+
+      teachers.forEach(code => {
+        const chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'rb-chip';
+        chip.dataset.code = code;
+        chip.addEventListener('click', function () {
+          toggleRank(courseKey, code);
+          paintChips(courseKey, row);
+        });
+        row.appendChild(chip);
+      });
+
+      box.appendChild(row);
+      list.appendChild(box);
+      paintChips(courseKey, row);
+    });
+  }
+
+  function toggleRank(courseKey, code) {
+    const arr = facultyRanks[courseKey] = facultyRanks[courseKey] || [];
+    const idx = arr.indexOf(code);
+    if (idx === -1) arr.push(code);
+    else arr.splice(idx, 1);
+    localStorage.setItem('rb_facultyRanks', JSON.stringify(facultyRanks));
+  }
+
+  function teacherFullLabelFromCode(courseKey, code) {
+    const entries = data[courseKey] || [];
+    const found = entries.find(e => teacherCodeOf(e) === code);
+    return found ? teacherLabelOf(found) : code;
+  }
+
+  function paintChips(courseKey, row) {
+    const arr = facultyRanks[courseKey] || [];
+    row.querySelectorAll('.rb-chip').forEach(chip => {
+      const code = chip.dataset.code;
+      const idx = arr.indexOf(code);
+      const label = teacherFullLabelFromCode(courseKey, code);
+      if (idx === -1) {
+        chip.className = 'rb-chip';
+        chip.innerHTML = label;
+      } else {
+        chip.className = 'rb-chip ranked';
+        chip.innerHTML = '<span class="rb-rank-badge">' + (idx + 1) + '</span> ' + label;
+      }
+    });
+  }
+
+  // ---------- step 2: limits (steppers + pills, no typing) ----------
+  let rbAvailableDaysCount = 6;
+
+  function buildLimitsUI() {
+    const pts = collectTimePoints();
+    rbAvailableDaysCount = Math.max(1, pts.days.length || 6);
+
+    if (rbMaxDays > rbAvailableDaysCount) rbMaxDays = rbAvailableDaysCount;
+    if (!rbMaxDays) rbMaxDays = Math.min(3, rbAvailableDaysCount);
+
+    if (!rbWindow || rbWindow.start == null || rbWindow.end == null) {
+      const defStart = closestTo(pts.starts, 10 * 60 + 50);
+      const defEnd = closestTo(pts.ends, 15 * 60 + 25);
+      rbWindow = {
+        start: defStart != null ? defStart : (pts.starts[0] || 0),
+        end: defEnd != null ? defEnd : (pts.ends[pts.ends.length - 1] || 1440)
+      };
+    }
+
+    renderDaysStepper();
+    renderPills('rb-start-pills', pts.starts, rbWindow.start, function (v) { rbWindow.start = v; saveWindow(); renderWindowReadout(); });
+    renderPills('rb-end-pills', pts.ends, rbWindow.end, function (v) { rbWindow.end = v; saveWindow(); renderWindowReadout(); });
+    renderWindowReadout();
+  }
+
+  function saveWindow() { localStorage.setItem('rb_window', JSON.stringify(rbWindow)); }
+
+  function renderDaysStepper() {
+    const minus = document.getElementById('rb-days-minus');
+    const plus = document.getElementById('rb-days-plus');
+    const val = document.getElementById('rb-days-value');
+    const readout = document.getElementById('rb-days-readout');
+
+    function paint() {
+      val.textContent = rbMaxDays;
+      readout.textContent = rbMaxDays + ' day' + (rbMaxDays === 1 ? '' : 's');
+      minus.disabled = rbMaxDays <= 1;
+      plus.disabled = rbMaxDays >= rbAvailableDaysCount;
+      localStorage.setItem('rb_maxDays', String(rbMaxDays));
+    }
+    minus.onclick = function () { if (rbMaxDays > 1) { rbMaxDays--; paint(); } };
+    plus.onclick = function () { if (rbMaxDays < rbAvailableDaysCount) { rbMaxDays++; paint(); } };
+    paint();
+  }
+
+  function renderPills(containerId, points, activeVal, onPick) {
+    const el = document.getElementById(containerId);
+    el.innerHTML = '';
+    points.forEach(p => {
+      const pill = document.createElement('button');
+      pill.type = 'button';
+      pill.className = 'rb-pill' + (p === activeVal ? ' active' : '');
+      pill.textContent = fmtMin(p);
+      pill.addEventListener('click', function () {
+        onPick(p);
+        el.querySelectorAll('.rb-pill').forEach(b => b.classList.remove('active'));
+        pill.classList.add('active');
+      });
+      el.appendChild(pill);
+    });
+  }
+
+  function renderWindowReadout() {
+    document.getElementById('rb-window-readout').textContent = fmtMin(rbWindow.start) + ' \u2013 ' + fmtMin(rbWindow.end);
+  }
+
+  // ---------- the solver: plain backtracking search, no AI involved ----------
+  function solve(courseKeys, maxDays, win, ranks, opts) {
+    opts = opts || {};
+    const stopAtFirst = !!opts.stopAtFirst;
+
+    const order = courseKeys.slice().sort((a, b) => (data[a] || []).length - (data[b] || []).length);
+    const metaCache = new Map();
+
+    function getMeta(entry) {
+      let m = metaCache.get(entry);
+      if (m) return m;
+      const days = extractDays(entry).filter(Boolean);
+      const timeStrs = Array.isArray(entry.time) ? entry.time : [entry.time];
+      const slots = [];
+      let timeCost = 0;
+      timeStrs.forEach(s => {
+        const r = parseTimeRange(s);
+        if (!r || isNaN(r[0]) || isNaN(r[1])) return;
+        slots.push(r);
+        timeCost += Math.max(0, win.start - r[0]) + Math.max(0, r[1] - win.end);
+      });
+      m = { days, slots, teacherCode: teacherCodeOf(entry), timeCost };
+      metaCache.set(entry, m);
+      return m;
+    }
+
+    function facultyCost(courseKey, entry) {
+      const arr = ranks[courseKey] || [];
+      if (!arr.length) return 0;
+      const idx = arr.indexOf(getMeta(entry).teacherCode);
+      return idx === -1 ? arr.length : idx;
+    }
+
+    const busy = {};
+    const dayCount = {};
+    let daysUsed = 0;
+
+    function hasConflict(meta) {
+      for (const day of meta.days) {
+        const arr = busy[day];
+        if (!arr || !arr.length) continue;
+        for (const slot of meta.slots) {
+          for (const b of arr) {
+            if (slot[0] < b[1] && b[0] < slot[1]) return true;
+          }
+        }
+      }
+      return false;
+    }
+    function commit(meta) {
+      meta.days.forEach(day => {
+        if (!busy[day]) busy[day] = [];
+        meta.slots.forEach(s => busy[day].push(s));
+        dayCount[day] = (dayCount[day] || 0) + 1;
+        if (dayCount[day] === 1) daysUsed++;
+      });
+    }
+    function uncommit(meta) {
+      meta.days.forEach(day => {
+        busy[day].length -= meta.slots.length;
+        dayCount[day]--;
+        if (dayCount[day] === 0) { daysUsed--; delete dayCount[day]; delete busy[day]; }
+      });
+    }
+
+    let bestScore = null, bestAssignment = null, feasible = false, stop = false, nodes = 0;
+    const NODE_LIMIT = 250000;
+
+    function recurse(i, fAcc, tAcc, assignment) {
+      if (stop) return;
+      nodes++;
+      if (nodes > NODE_LIMIT) { stop = true; return; }
+
+      if (i === order.length) {
+        feasible = true;
+        const better = !bestScore || fAcc < bestScore[0] || (fAcc === bestScore[0] && tAcc < bestScore[1]);
+        if (better) { bestScore = [fAcc, tAcc]; bestAssignment = Object.assign({}, assignment); }
+        if (stopAtFirst) stop = true;
+        return;
+      }
+
+      const courseKey = order[i];
+      const candidates = (data[courseKey] || []).map(entry => {
+        const meta = getMeta(entry);
+        return { entry: entry, meta: meta, fc: facultyCost(courseKey, entry) };
+      }).sort((a, b) => a.fc - b.fc || a.meta.timeCost - b.meta.timeCost);
+
+      for (const cand of candidates) {
+        if (stop) return;
+        const meta = cand.meta;
+        if (!meta.days.length) continue;
+        if (hasConflict(meta)) continue;
+        const newDays = meta.days.filter(d => !dayCount[d]).length;
+        if (daysUsed + newDays > maxDays) continue;
+
+        commit(meta);
+        assignment[courseKey] = cand.entry;
+        recurse(i + 1, fAcc + cand.fc, tAcc + meta.timeCost, assignment);
+        delete assignment[courseKey];
+        uncommit(meta);
+      }
+    }
+
+    recurse(0, 0, 0, {});
+    return { feasible: feasible, bestAssignment: bestAssignment, bestScore: bestScore, nodes: nodes, capped: nodes > NODE_LIMIT };
+  }
+
+  function findMinimumDays(courseKeys, win, ranks, startFrom) {
+    for (let d = startFrom; d <= 7; d++) {
+      const r = solve(courseKeys, d, win, ranks, { stopAtFirst: true });
+      if (r.feasible) return d;
+    }
+    return null;
+  }
+
+  // ---------- build & render ----------
+  const buildBtn = document.getElementById('rb-build-btn');
+  buildBtn.addEventListener('click', runBuild);
+
+  function runBuild() {
+    const courseKeys = Object.keys(data);
+    if (!courseKeys.length) return;
+
+    buildBtn.disabled = true;
+    buildBtn.innerHTML = '<i class="fas fa-spinner"></i> Crunching the numbers\u2026';
+
+    setTimeout(function () {
+      const result = solve(courseKeys, rbMaxDays, rbWindow, facultyRanks, {});
+      rbResults = { courseKeys: courseKeys, result: result };
+      renderResult();
+      buildBtn.disabled = false;
+      buildBtn.innerHTML = '<i class="fas fa-calculator"></i> Build my routine';
+    }, 30);
+  }
+
+  function renderResult() {
+    const el = document.getElementById('rb-result');
+    el.innerHTML = '';
+    const courseKeys = rbResults.courseKeys, result = rbResults.result;
+
+    if (!result.feasible) {
+      const minDays = findMinimumDays(courseKeys, rbWindow, facultyRanks, rbMaxDays + 1);
+      const banner = document.createElement('div');
+      banner.className = 'rb-result-banner bad';
+      if (minDays) {
+        banner.innerHTML = '<i class="fas fa-triangle-exclamation"></i> These courses don\u2019t fit in ' + rbMaxDays + ' day' + (rbMaxDays === 1 ? '' : 's') + ' without a clash. The minimum possible is <strong>' + minDays + ' day' + (minDays === 1 ? '' : 's') + '</strong> \u2014 try raising the limit above.';
+      } else {
+        banner.innerHTML = '<i class="fas fa-triangle-exclamation"></i> No conflict-free combination exists for these courses at all, regardless of how many days you allow. Two of your courses likely always overlap \u2014 check their sections.';
+      }
+      el.appendChild(banner);
+      return;
+    }
+
+    const assignment = result.bestAssignment;
+    const usedDays = new Set();
+    courseKeys.forEach(k => extractDays(assignment[k]).forEach(d => { if (d) usedDays.add(d); }));
+
+    const banner = document.createElement('div');
+    banner.className = 'rb-result-banner good';
+    banner.innerHTML = '<i class="fas fa-circle-check"></i> Found a clash-free routine across <strong>' + usedDays.size + ' day' + (usedDays.size === 1 ? '' : 's') + '</strong>' + (result.capped ? ' (best found within the search budget)' : '') + '.';
+    el.appendChild(banner);
+
+    const dayChips = document.createElement('div');
+    dayChips.className = 'rb-day-chips';
+    DAY_ORDER.forEach(d => {
+      const chip = document.createElement('div');
+      chip.className = 'rb-day-chip' + (usedDays.has(d) ? ' used' : '');
+      chip.textContent = d;
+      dayChips.appendChild(chip);
+    });
+    el.appendChild(dayChips);
+
+    courseKeys.forEach(courseKey => {
+      const entry = assignment[courseKey];
+      const ranks = facultyRanks[courseKey] || [];
+      const code = teacherCodeOf(entry);
+      const rankIdx = ranks.indexOf(code);
+
+      const card = document.createElement('div');
+      card.className = 'rb-result-card';
+
+      let badge = '<span class="rb-badge nopref">no preference set</span>';
+      if (rankIdx === 0) badge = '<span class="rb-badge pick1">your 1st pick</span>';
+      else if (rankIdx > 0) badge = '<span class="rb-badge pickn">pick #' + (rankIdx + 1) + '</span>';
+
+      const timeStrs = Array.isArray(entry.time) ? entry.time : [entry.time];
+      const overtime = timeStrs.some(s => {
+        const r = parseTimeRange(s);
+        return r && (r[0] < rbWindow.start || r[1] > rbWindow.end);
+      });
+
+      card.innerHTML =
+        '<div class="rb-result-card-top"><strong>' + courseKey + '</strong>' + badge + '</div>' +
+        '<div class="rb-result-card-meta">' +
+        '<span>Sec <strong>' + entry.section + '</strong></span>' +
+        '<span><strong>' + teacherLabelOf(entry) + '</strong></span>' +
+        '<span>' + entry.days + '</span>' +
+        '<span class="' + (overtime ? 'rb-overtime' : '') + '">' + timeStrs.join(', ') + (overtime ? ' (outside window)' : '') + '</span>' +
+        '</div>';
+      el.appendChild(card);
+    });
+
+    const applyRow = document.createElement('div');
+    applyRow.className = 'rb-apply-row';
+    applyRow.innerHTML =
+      '<button class="rb-apply-btn" id="rb-apply-btn"><i class="fas fa-check"></i> Apply this routine</button>' +
+      '<button class="rb-retry-btn" id="rb-retry-btn">Try different limits</button>';
+    el.appendChild(applyRow);
+
+    document.getElementById('rb-apply-btn').addEventListener('click', function () { applyRoutine(assignment); });
+    document.getElementById('rb-retry-btn').addEventListener('click', function () {
+      el.innerHTML = '';
+      document.getElementById('rb-body').scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  function applyRoutine(assignment) {
+    Object.keys(assignment).forEach(courseKey => { selected[courseKey] = assignment[courseKey]; });
+    saveSelected();
+    renderSelected();
+    renderSchedule();
+    closeModal();
+    Swal.fire({ icon: 'success', title: 'Routine applied', toast: true, position: 'top', timer: 1500, showConfirmButton: false });
+  }
+
+})();
+</script>
