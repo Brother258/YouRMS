@@ -1,0 +1,1970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="YouRMS - University Course Scheduler & Exam Planner for ULAB">
+  <meta name="description" content="YouRMS is a responsive web app for ULAB students to manage course schedules, daily timetables and exam plans efficiently. Detect class conflicts, generate daily summaries and share schedules with classmates!">
+  <meta name="keywords" content="ULAB course scheduler, ULAB exam planner, ULAB timetable app, ULAB class schedule, ULAB course selection, ULAB schedule conflict detector, ULAB daily schedule, ULAB student planner, University of Liberal Arts Bangladesh schedule, ULAB academic planner, ULAB student course tracker, ULAB course management, ULAB online timetable, ULAB exam schedule tracker, ULAB study planner, ULAB university courses, ULAB class management, ULAB exam timetable, ULAB planner, YouRMS App, YouRMS Website, YouRMS Shahriar, URMS ULAB, ULAB URMS, ULAB Routine Maker, URMS Routine Maker, YouRMS Routine Maker">
+
+  <meta name="author" content="Md. Shahriar Alam">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yourms.netlify.app/">
+  <meta property="og:title" content="YouRMS - University Course Scheduler & Exam Planner for ULAB">
+  <meta property="og:description" content="Manage your ULAB courses, daily class schedule and exams efficiently with YouRMS. Detect schedule conflicts, create summaries and share your course plan with friends.">
+  <meta property="og:image" content="https://yourms.netlify.app/YouRMS-banner.png">
+  <meta property="og:site_name" content="YouRMS - ULAB Course Scheduler">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://yourms.netlify.app/">
+  <meta property="twitter:title" content="YouRMS - University Course Scheduler & Exam Planner for ULAB">
+  <meta property="twitter:description" content="YouRMS helps ULAB students track courses, detect class conflicts, manage daily schedules and plan exams easily. Share your timetable online and stay organized.">
+  <meta property="twitter:image" content="https://yourms.netlify.app/YouRMS-banner.png">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://yourms.netlify.app/">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://yourms.netlify.app/yourms-icon.png">
+
+<!-- Web App Manifest -->
+<link rel="manifest" href="https://yourms.netlify.app/manifest.json">
+
+<!-- Apple Touch Icon -->
+<link rel="apple-touch-icon" sizes="180x180" href="https://yourms.netlify.app/yourms-icon.png">
+
+<!-- Theme Color -->
+<meta name="theme-color" content="#00AEEF"> 
+
+
+
+	
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "YouRMS",
+    "url": "https://yourms.netlify.app",
+    "description": "YouRMS is a responsive web application for ULAB students to manage courses, class schedules, daily timetables and exam plans. Detect conflicts, track progress and share schedules easily.",
+    "applicationCategory": "EducationApplication",
+    "operatingSystem": "Web",
+    "creator": {
+      "@type": "Person",
+      "name": "Md. Shahriar Alam"
+    },
+    "keywords": [
+      "ULAB course scheduler",
+      "ULAB exam planner",
+      "ULAB class schedule",
+      "ULAB student timetable",
+      "University of Liberal Arts Bangladesh schedule",
+      "ULAB academic planner",
+      "ULAB course tracker",
+      "ULAB study planner",
+      "ULAB course management",
+      "ULAB exam timetable",
+      "ULAB daily schedule",
+      "ULAB university courses",
+      "ULAB online timetable",
+      "ULAB routine maker",
+
+    ]
+  }
+  </script>
+
+  <!-- Extra SEO Boost: Alternate Titles and Descriptions -->
+  <meta name="title-2" content="YouRMS - ULAB Routine Maker & Exam Scheduler Online">
+  <meta name="description-2" content="YouRMS helps ULAB students organize courses, plan exams and manage daily schedules with ease. Detect conflicts, generate summaries and stay on top of your academic life.">
+
+
+
+
+
+<link rel="stylesheet" href="https://yourms.netlify.app/install.css">
+<script src="https://yourms.netlify.app/install.js"></script> 
+
+
+
+	
+  <title>YouRMS - University Course Scheduler & Exam Planner for ULAB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,450;9..144,560;9..144,650&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "meetwzqgp2");
+    </script>
+<script src="course_data.js"></script>
+<script src="course_name.js"></script>
+<script src="search.js"></script>
+<script src="popup.js"></script>
+<script src="share.js"></script>
+
+
+
+
+
+  
+
+  <style>
+
+  /* ============================================================
+     YouRMS — design system
+     Warm paper background, ink type, a single confident clay
+     accent. Borders do most of the work; shadows are reserved
+     for things that are actually lifted (hover states, the FAB).
+     ============================================================ */
+
+  :root {
+    --paper:        #f7f4ee;
+    --paper-raised: #fffdf9;
+    --ink:          #1d1a16;
+    --ink-soft:     #6b6458;
+    --ink-faint:    #9a9385;
+    --line:         #e6e0d2;
+    --line-strong:  #d7cfba;
+
+    --accent:       #b14323;
+    --accent-ink:   #7c2c14;
+    --accent-soft:  #f3e3d6;
+
+    --good:         #2f6b4f;
+    --good-soft:    #e2eee5;
+    --bad:          #ad3434;
+    --bad-soft:     #f6e2e1;
+
+    --radius-sm: 8px;
+    --radius:    14px;
+    --radius-lg: 22px;
+
+    --shadow-sm: 0 1px 2px rgba(29,26,22,0.05);
+    --shadow-md: 0 10px 30px -8px rgba(29,26,22,0.16);
+    --shadow-lg: 0 24px 60px -16px rgba(29,26,22,0.28);
+
+    --ease: cubic-bezier(.22,.8,.32,1);
+  }
+
+  * , *::before, *::after { box-sizing: border-box; }
+
+  html { font-size: 16px; scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: 4.5rem;
+  }
+
+  ::selection { background: var(--accent-soft); color: var(--accent-ink); }
+
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: var(--line-strong);
+    border-radius: 10px;
+    border: 2px solid var(--paper);
+  }
+  ::-webkit-scrollbar-thumb:hover { background: var(--ink-faint); }
+
+  a { color: var(--accent-ink); }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Fraunces', Georgia, serif;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    font-weight: 560;
+  }
+
+  /* ---------- Navigation ---------- */
+
+  .site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    background: rgba(247,244,238,0.82);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-bottom: 1px solid transparent;
+    transition: border-color .35s var(--ease), box-shadow .35s var(--ease);
+  }
+  .site-nav.is-scrolled {
+    border-bottom-color: var(--line);
+    box-shadow: 0 8px 24px -16px rgba(29,26,22,0.25);
+  }
+  .nav-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0.7rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+  .nav-brand img {
+    height: 34px;
+    width: auto;
+    display: block;
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.85rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav-links a {
+    position: relative;
+    text-decoration: none;
+    color: var(--ink-soft);
+    font-weight: 500;
+    font-size: 0.92rem;
+    padding: 0.3rem 0;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: -2px;
+    width: 100%;
+    height: 1.5px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform .3s var(--ease);
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+  .btn-restart {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    padding: 0.5rem 1.05rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background .2s var(--ease), border-color .2s var(--ease), transform .15s var(--ease);
+  }
+  .btn-restart:hover { background: var(--paper-raised); border-color: var(--accent); color: var(--accent-ink); }
+  .btn-restart:active { transform: scale(0.96); }
+  .btn-restart i { font-size: 0.8rem; transition: transform .4s var(--ease); }
+  .btn-restart:hover i { transform: rotate(-90deg); }
+
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: 1px solid var(--line-strong);
+    border-radius: 10px;
+    width: 38px; height: 38px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--ink);
+    font-size: 1.05rem;
+  }
+
+  @media (max-width: 760px) {
+    .nav-links {
+      position: absolute;
+      top: 100%; left: 0; right: 0;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+      background: var(--paper-raised);
+      border-bottom: 1px solid var(--line);
+      box-shadow: var(--shadow-md);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .35s var(--ease);
+      padding: 0 1.5rem;
+    }
+    .site-nav.nav-open .nav-links {
+      max-height: 280px;
+      padding: 0.5rem 1.5rem 1rem;
+    }
+    .nav-links li { width: 100%; }
+    .nav-links a { display: block; padding: 0.7rem 0; }
+    .nav-links a::after { display: none; }
+    .nav-links .btn-restart { margin: 0.4rem 0 0.6rem; width: 100%; justify-content: center; }
+    .nav-toggle { display: flex; }
+  }
+
+  /* ---------- Page layout ---------- */
+
+  .selected-container,
+  #daily-schedule-summary,
+  #schedule-container {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto 2.25rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  /* tiny utility set (kept so existing markup needs no edits) */
+  .d-flex { display: flex; }
+  .flex-wrap { flex-wrap: wrap; }
+  .justify-content-between { justify-content: space-between; }
+  .align-items-center { align-items: center; }
+  .gap-2 { gap: 0.6rem; }
+  .mb-3 { margin-bottom: 1.1rem; }
+
+  /* ---------- Daily schedule summary ---------- */
+
+  #daily-schedule-summary {
+    margin-top: 1.75rem;
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 1.75rem;
+    animation: riseIn .5s var(--ease) both;
+  }
+  #daily-schedule-summary h3 {
+    font-size: 1.2rem;
+    margin: 0 0 0.9rem;
+    color: var(--ink);
+  }
+  #daily-schedule-summary h3::before {
+    content: '';
+    display: inline-block;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-right: 0.55rem;
+    vertical-align: middle;
+  }
+  #daily-schedule-summary p {
+    color: var(--ink-soft);
+    margin: 0.35rem 0;
+    font-size: 0.92rem;
+    padding-left: 1.15rem;
+  }
+  #daily-schedule-summary p strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- Selected courses ---------- */
+
+  .selected-container h1 {
+    font-size: 1.9rem;
+    margin: 0;
+  }
+  .selected-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px,1fr));
+    gap: 1rem;
+  }
+  .selected-card {
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.3rem 1.4rem;
+    position: relative;
+    animation: riseIn .45s var(--ease) both;
+  }
+  .selected-card:nth-of-type(1) { animation-delay: .02s; }
+  .selected-card:nth-of-type(2) { animation-delay: .06s; }
+  .selected-card:nth-of-type(3) { animation-delay: .1s; }
+  .selected-card:nth-of-type(4) { animation-delay: .14s; }
+  .selected-card:nth-of-type(5) { animation-delay: .18s; }
+  .selected-card:nth-of-type(n+6) { animation-delay: .2s; }
+  .selected-card:hover {
+    border-color: var(--line-strong);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+  }
+  .selected-card h3 {
+    font-size: 1.08rem;
+    color: var(--accent-ink);
+    margin: 0 0 0.55rem;
+    padding-right: 1.6rem;
+  }
+  .selected-card p {
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    margin: 0.22rem 0;
+    font-family: 'Inter', sans-serif;
+  }
+  .selected-card p strong { color: var(--good); font-weight: 600; }
+  .selected-card .delete-btn {
+    position: absolute;
+    top: 1.15rem; right: 1.15rem;
+    background: none;
+    border: none;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+    cursor: pointer;
+    transition: background .2s var(--ease), color .2s var(--ease), transform .15s var(--ease);
+  }
+  .selected-card .delete-btn:hover {
+    background: var(--bad-soft);
+    color: var(--bad);
+  }
+  .selected-card .delete-btn:active { transform: scale(0.88); }
+
+  /* ---------- Course sections / option cards ---------- */
+
+  #schedule-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+  .course {
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .course h2 {
+    font-size: 1.15rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    color: var(--ink);
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    padding: 0.95rem 1.4rem;
+    letter-spacing: 0.01em;
+  }
+  .card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px,1fr));
+    gap: 0.9rem;
+    padding: 1.25rem;
+  }
+  .card {
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1rem 1.1rem 1rem 1.4rem;
+    position: relative;
+    cursor: pointer;
+    animation: riseIn .4s var(--ease) both;
+    transition: border-color .2s var(--ease), box-shadow .2s var(--ease), transform .15s var(--ease);
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0.8rem; bottom: 0.8rem;
+    width: 3px;
+    border-radius: 3px;
+    background: var(--line-strong);
+    transition: background .2s var(--ease);
+  }
+  .card:hover {
+    border-color: var(--line-strong);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  .card:has(input:checked) {
+    border-color: var(--good);
+    background: var(--good-soft);
+  }
+  .card:has(input:checked)::before { background: var(--good); }
+
+  .card input[type="checkbox"] {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    margin: 0;
+    width: 20px; height: 20px;
+    appearance: none;
+    -webkit-appearance: none;
+    border: 1.5px solid var(--line-strong);
+    border-radius: 6px;
+    background: var(--paper-raised);
+    cursor: pointer;
+    transition: background .15s var(--ease), border-color .15s var(--ease), transform .1s var(--ease);
+  }
+  .card input[type="checkbox"]:hover { border-color: var(--accent); }
+  .card input[type="checkbox"]:active { transform: scale(0.88); }
+  .card input[type="checkbox"]:checked {
+    background: var(--good);
+    border-color: var(--good);
+  }
+  .card input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 6px; top: 2px;
+    width: 5px; height: 9px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(40deg);
+  }
+
+  .info { display: block; padding-right: 1.6rem; }
+  .info span {
+    display: block;
+    margin: 0.28rem 0;
+    font-size: 0.87rem;
+    color: var(--ink-soft);
+    font-family: 'Inter', sans-serif;
+  }
+  .tag {
+    font-weight: 600;
+    color: var(--ink);
+    margin-right: 0.25rem;
+  }
+
+  @media (max-width: 600px) {
+    .selected-container h1 { font-size: 1.55rem; }
+    .course h2 { font-size: 1rem; }
+    .selected-container, #daily-schedule-summary, #schedule-container {
+      padding-left: 1.1rem; padding-right: 1.1rem;
+    }
+  }
+
+  /* ---------- Share buttons (injected by share.js) ---------- */
+
+  .btn {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    border-radius: 999px;
+    padding: 0.5rem 1.05rem;
+    border: 1px solid var(--line-strong);
+    background: var(--paper-raised);
+    color: var(--ink);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: background .2s var(--ease), border-color .2s var(--ease), color .2s var(--ease), transform .15s var(--ease);
+  }
+  .btn:active { transform: scale(0.96); }
+  .btn-outline-success { border-color: var(--good); color: var(--good); }
+  .btn-outline-success:hover { background: var(--good-soft); }
+  .btn-outline-info { border-color: var(--accent); color: var(--accent-ink); }
+  .btn-outline-info:hover { background: var(--accent-soft); }
+
+  /* ---------- Floating add-course button ---------- */
+
+  #add-course-btn {
+    position: fixed;
+    bottom: 5.5rem;
+    right: 2rem;
+    background: var(--ink);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 58px;
+    height: 58px;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-lg);
+    cursor: pointer;
+    z-index: 1000;
+    transition: background .25s var(--ease), transform .25s var(--ease);
+  }
+  #add-course-btn:hover { background: var(--accent); transform: translateY(-3px); }
+  #add-course-btn:active { transform: scale(0.92); }
+  #add-course-btn i { transition: transform .3s var(--ease); }
+  #add-course-btn:hover i { transform: rotate(90deg); }
+  #add-course-btn::after {
+    content: 'Add a course';
+    position: absolute;
+    right: calc(100% + 12px);
+    top: 50%;
+    transform: translateY(-50%) translateX(6px);
+    background: var(--ink);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.4rem 0.75rem;
+    border-radius: 999px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s var(--ease), transform .2s var(--ease);
+  }
+  #add-course-btn:hover::after { opacity: 1; transform: translateY(-50%) translateX(0); }
+  @media (max-width: 600px) {
+    #add-course-btn::after { display: none; }
+    #add-course-btn { bottom: 4.75rem; right: 1.25rem; width: 52px; height: 52px; }
+  }
+
+  /* ---------- Footer / ticker ---------- */
+
+  .site-footer {
+    width: 100%;
+    background: var(--paper-raised);
+    border-top: 1px solid var(--line);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 900;
+  }
+  .ticker {
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+    background: var(--accent-soft);
+    padding: 0.4rem 0;
+  }
+  .ticker:hover .ticker-track { animation-play-state: paused; }
+  .ticker-track {
+    display: flex;
+    width: max-content;
+    gap: 4rem;
+    animation: ticker 22s linear infinite;
+    font-size: 0.8rem;
+    color: var(--accent-ink);
+    font-weight: 500;
+  }
+  .ticker-track span { white-space: nowrap; }
+  .ticker-track a { color: var(--accent-ink); font-weight: 700; text-decoration: underline; }
+  .footer-credit {
+    text-align: center;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    padding: 0.55rem 1rem;
+  }
+  .footer-credit a { color: var(--ink); font-weight: 700; text-decoration: none; }
+  .footer-credit a:hover { color: var(--accent-ink); text-decoration: underline; }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @keyframes riseIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---------- SweetAlert2 touch-ups ---------- */
+
+  .swal2-popup {
+    font-family: 'Inter', sans-serif !important;
+    border-radius: var(--radius-lg) !important;
+  }
+  .swal2-title { font-family: 'Fraunces', serif !important; color: var(--ink) !important; }
+  .swal2-html-container { color: var(--ink-soft) !important; }
+  .swal2-styled.swal2-confirm {
+    background: var(--ink) !important;
+    border-radius: 999px !important;
+    box-shadow: none !important;
+  }
+  .swal2-styled.swal2-confirm:focus { box-shadow: 0 0 0 3px var(--accent-soft) !important; }
+  .swal2-styled.swal2-cancel {
+    background: transparent !important;
+    color: var(--ink-soft) !important;
+    border-radius: 999px !important;
+    box-shadow: none !important;
+  }
+  .swal2-input {
+    border-radius: var(--radius-sm) !important;
+    border: 1.5px solid var(--line-strong) !important;
+  }
+  .swal2-input:focus { border-color: var(--accent) !important; box-shadow: 0 0 0 3px var(--accent-soft) !important; }
+
+  </style>
+</head>
+<body>
+
+
+<nav class="site-nav" id="site-nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="/262/">
+      <img src="https://yourms.netlify.app/YouRMS-banner.png" alt="YouRMS">
+    </a>
+
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <ul class="nav-links" id="nav-links">
+      <li><a href="/262/manual">Manual</a></li>
+      <li><a href="/262/about">About</a></li>
+      <li><a href="/262/contact">Contact</a></li>
+      <li><button onclick="restartApp()" class="btn-restart"><i class="fas fa-arrow-rotate-right"></i> Restart</button></li>
+    </ul>
+  </div>
+</nav>
+
+  <div id="daily-schedule-summary" style="display: none;"></div>
+
+  <div class="selected-container" style="display: none;">
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+        <h1>Your Selected Courses</h1>
+        <div id="share-actions" class="d-flex gap-2"></div>
+    </div>
+    <div class="selected-grid" id="selected-courses"></div>
+  </div>
+  
+  <div id="schedule-container"></div>
+
+  <button id="add-course-btn" title="Add a course">
+    <i class="fas fa-plus"></i>
+  </button>
+
+<footer class="site-footer">
+  <div class="ticker">
+    <div class="ticker-track">
+      <span><a href="https://chat.whatsapp.com/B9vRwSqcdCHG36Bso5EMjS?mode=wwt" target="_blank" rel="noopener noreferrer">Join the WhatsApp community</a> — get updates and help whenever you're stuck.</span>
+      <span><a href="https://chat.whatsapp.com/B9vRwSqcdCHG36Bso5EMjS?mode=wwt" target="_blank" rel="noopener noreferrer">Join the WhatsApp community</a> — get updates and help whenever you're stuck.</span>
+    </div>
+  </div>
+  <div class="footer-credit">
+    Developed with ❤️ by <a href="https://fb.com/md.shahriar.alam.sikey" target="_blank">Shahriar</a>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var nav = document.getElementById('site-nav');
+    var toggle = document.getElementById('nav-toggle');
+
+    window.addEventListener('scroll', function () {
+      nav.classList.toggle('is-scrolled', window.scrollY > 8);
+    }, { passive: true });
+
+    toggle.addEventListener('click', function () {
+      var open = nav.classList.toggle('nav-open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    document.getElementById('nav-links').addEventListener('click', function (e) {
+      if (e.target.tagName === 'A') nav.classList.remove('nav-open');
+    });
+  })();
+</script>
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    let data = {};
+
+const teacherFull = {
+  "AKA": "T.M. Abul Kalam Azad",
+  "TBA": "To Be Announced",
+  "MNMA": "Md. Nazmul Abdal",
+  "RaiK": "Raihan Kibria",
+  "FK": "Fatema Khan",
+  "NTNH": "Nazifa Tasnin Hia",
+  "MAP": "Md. Aktaruzzaman Pramanik",
+  "FTZC": "Fariha-Tuz Zahra Chowdhury",
+  "RS": "Rajia Sultana",
+  "AmiS": "Amio Sadman",
+  "IrM": "Iram Mehrin",
+  "ShahA": "Shaheen Ara",
+  "FHS": "Faheem HaSAn Shahed",
+  "TazA": "Tazin Ahmed",
+
+  "AAhM": "Azaz Ahmed",
+  "DMMH": "Md. Mahadhi Hasann",
+  "KHH": "Kaiser Hamidul Huq",
+  "MIUK": "Muhammed Ihsan-Ul-Kabir",
+  "NeG": "Neha Ghose",
+  "SAdA": "Barrister Saad Andalib Aaistu",
+  "SQC": "Selima Quader Chowdhury",
+
+  "AAMM": "Abdullah Al Mahmud",
+  "DSWA": "Sarwar Ahmed",
+  "KAMRH": "K.A.M. Rifat Hasan",
+  "MK": "Moinak Kanungo",
+  "NFH": "Nafia Haque",
+  "SadK": "Sadia Khalid",
+  "SRAL": "Syeda Reshma Akter Laboni",
+
+  "AAR": "Ahmed Abidur Razzaque Khan (GED)",
+  "DZUR": "Zoeb-Ur-Rahman",
+  "KAS": "Kamar Ahmad Simon",
+  "MKB": "Milon Kumar Bhattacharjee",
+  "NIH": "Nishat Hamid",
+  "SahH": "Sahadat Hossain",
+  "SRZ": "Shamim Reza",
+
+  "AB": "Abdul Baten",
+  "EAZ": "Ekhtear Ahmed Zeeshan",
+  "KKK": "Kabya Kritthika",
+  "MKU": "Md Kamal Uddin",
+  "NIUR": "Nayem Imtiaz Uddin Raju",
+  "SahibH": "Sahib Hossain",
+  "SSMJ": "Syeda Sadia Mehjabin (MSJ)",
+
+  "ABM": "Abdul Mannan",
+  "FDAK": "Ferdousi Ara Khatun",
+  "KKS": "Krishna Kumar Saha",
+  "MLM": "Md. LAwha Mahfuz",
+  "NMK": "Naima Khatun",
+  "SakH": "Sakib Hossain",
+  "STHK": "Sk. Tasthekur Hossain Kowshik",
+
+  "AFMM": "A.F.M. Moniruzzaman",
+  "KM": "Kazi Madina",
+  "MM": "Md. Muntasir Mamun",
+  "NNE": "Nazmun Nur Eva",
+  "SAT": "Shirin Akter",
+  "SUAh": "Shamsuddin Ahamad",
+
+  "KMT": "Kazi M. Tarique",
+  "MMP": "Md. Masum Parvez",
+  "NReza": "Nafees Reza",
+  "SaZ": "Sameera Zaman",
+  "SuR": "Sumon Rahman",
+
+  "AMMR": "Al Mahmud Rumman",
+  "FMS": "Faisal Mohammad Shahriar",
+  "LA": "Laboni Akter",
+  "NT": "Nusrat Tajkia (ENG)",
+  "SDA": "Sadia Afrin",
+  "SViA": "Suravi Akhter",
+
+  "ANMFa": "Abu Noor Md Farukh",
+  "GKZ": "GoLAm Kader Zilany",
+  "MaHK": "Mahmud Hasan Khan",
+  "MNUT": "Md Nizam Uddin Tanim",
+  "SDas": "Shatabdi Das",
+  "SWAK": "Shawon Ahmed Kabir",
+
+  "AOMS": "A.O.M. Shamsuddoha",
+  "HaI": "Haseeb Irfanullah",
+  "MaiH": "Mainul Haque",
+  "MoMH": "Mohammed Mozammel Huq",
+  "NUA": "Nasir Uddin Ahmed",
+  "SDH": "Sadia Haque",
+  "TaF": "Tahura Farbin",
+
+  "AR": "Arifa Ghani Rahman",
+  "HBK": "Habiba Kibria",
+  "MAIs": "Md. Aminul Islam",
+  "MosH": "Mosharof Hossainin",
+  "OA": "Oeshwik Ahmed",
+  "TazA": "Tazin Ahmed",
+
+  "ArI": "Arzoo Ismail",
+  "HMR": "Syed Hasib M. Rahman",
+  "MAJB": "Md. Arifujjaman Babu",
+  "MRBR": "Md. Redwan Bin Rahman",
+  "ORS": "Oliur Rahman Sun",
+  "SharN": "Sharminur Nahar",
+  "THR": "Tawhid Reaz, Coordinator EMBA",
+
+  "ARS": "Asma Royhana Sarkar",
+  "HRK": "Harunur Rashid Khan",
+  "MaN": "Mahmudunnabi",
+  "MRMA": "Miduri Rahman Atoshee",
+  "PFQ": "Paromita Fairuz Quarishi",
+  "SHJ": "Shahnaj Husne Jahan",
+  "TJI": "Tahamina Jahan Imran",
+
+  "ASAr": "Abu Sayeed Arif",
+  "IH": "Imran Hossain",
+  "MASQ": "M.Ali Siddiquee",
+  "MSAC": "Md. Saiful Alam Chowdhury",
+  "PH": "Parveen Huda",
+  "ShS": "Shubhankar Shil",
+  "TKDas": "Tusher Kanti Das",
+
+  "ASMR": "Abu Saleh Mohammad Rafi",
+  "MAWA": "Md. Anowarul Abedin",
+  "MSH": "Md. Sazzad Hossainin",
+  "PMR": "Parvez Mahmud Rajib",
+  "SJMF": "Sanjana Mustafa",
+  "TRM": "Tasnova Rahman",
+
+  "ASU": "Ahsann Ullah",
+  "ITH": "Irtifa Haasn",
+  "MAzn": "Muhammad Aminuzzaman",
+  "MSIK": "M Shahidul Islam Khondaker",
+  "SJSQ": "Shah Jafor Sadeek Quaderi",
+  "TRoy": "Tonoy Roy",
+
+  "AT": "Anika Tahsin",
+  "JFR": "Jannatul Ferdous Ruma",
+  "MCy": "Mehek Chowdhury",
+  "MSMM": "Mohammad Sultan Mahmud",
+  "RHF": "Rubaiya Hafiz",
+  "SKHS": "Sakib Hasan Siddiqui",
+  "TSZK": "Towsif Zahin Khan",
+
+  "ATIA": "Antara Ibnat Audhaya",
+  "KAM": "Kader Abdul Muhammad",
+  "MDI": "Md. Didarul Islam",
+  "MSNR": "Md. Shahinur Rahman",
+  "RKH": "Rakib Hasan",
+  "SKTR": "Shawkat Tanveer Rahman",
+  "UAJ": "Umana Anjalin",
+
+  "AUK": "Anirudha Kahaly",
+  "MdKH": "Md Kaviul Hossain",
+  "MSS": "Md. Shawn Sheikh",
+  "RMC": "Rafiq Um Munir Chowdhury",
+  "SLA": "Sadia Lena Alfee",
+  "UH": "Ummay Habiba",
+
+  "AvH": "ABantee Harun",
+  "MGK": "Mohammad Golam Kibria",
+  "MTIs": "Muzhataba Tawkeer Islam",
+  "SMJ": "Sirajum Munira Joti",
+  "UKA": "Uttam Karmaker Aurko",
+
+  "AzH": "Azizul Haque",
+  "MHH": "Muhammad Hasibul Hasan",
+  "MTUS": "Md. Taufiq Us Samad",
+  "RSC": "Rukhsana Choudhury",
+  "SMMR": "S M Mahbubur Rahman",
+  "WA": "Wazir Ahmad",
+
+  "BAK": "Begum Akter Kamal",
+  "MHHr": "MH Haidar",
+  "MUAh": "Mahtab Uddin Ahmed",
+  "RWAIK": "Rezwan Al Islam Khan",
+  "WFU": "Wahida Ferdose Urmi",
+
+  "BCB": "Bikash Chandra Bhowmick",
+  "MinUA": "Minhaz Uddin Ahmed",
+  "MZRM": "Md Ziaur Rahman",
+  "SA": "Shajedul ALAm",
+  "WH": "Wahidur Habib",
+
+  "DS": "Shourav Sikder",
+  "NafM": "Nafees Monsoor",
+  "SABQ": "SArkar Barbaq Quarmal",
+
+  "NAJ": "Nayma Akhter Jahan",
+  "SAC": "Shahana Afrose Chowdhury",
+
+  "NaR": "Nadia Rahman",
+  "NBS": "Nibras Bin SAyed",
+
+
+
+  "SRoy": "Somonindro Roy",
+  "DAMT": "Dewan Ahmed Muhtasim",
+  "DSAK": "Sheikh Abdul Kader",
+  "MKK": "Mrittika Kamal",
+  "DSAS": "Dewan Shahnoor Alam Sourav",
+  "SAIS": "Sheriff Al Sire",
+  "DSL": "Sabrina Lutfa",
+  "NPS": "Niluthpaul Sarker",
+  "LN": "Lubaba Nawar",
+  "AMA": "Abul Mansur Ahmed",
+  "NTR": "Naim Tarique",
+  "FES": "Faiham Ebna Sharif",
+  "AniZ": "Anika Zaman",
+  "FMI": "Faiyaz Md. Iqbal",
+  "MAU": "Md. Alauddin",
+  "MSAK": "Md. Shaikh Abrar Kabir",
+  "PMH": "Mahmood Hossain (ESS Head)",
+  "TSN": "Tahseen Nower",
+  "MSMK": "Mst Sumi Khatun",
+  "ASR": "Atanu Shuvam Roy",
+  "IAB": "Ifat Al Baqee",
+  "MFI": "Md. Faisal Imran",
+  "UMR": "Usama Rafid",
+  "MFS": "Mustafiz Shafi",
+  "MTI": "Mohammed Tanvir Imam",
+  "SNY": "Sheikh Nahiyan",
+  "VDG": "Vincent Dip Gomes",
+  "AZI": "Azazul Islam",
+  "MuI": "Muhammad Ibrahim",
+  "MusH": "Mushira Habib",
+  "MYI": "Md Yeasir Iqbal",
+  "NazA": "Nazia Afrin"
+};
+
+
+    // — Exam Rules
+    const examRules = [
+      { start: 8*60,    end: 9*60+20,  dayIdx:0, time:"08:00 - 10:00 am" },
+      { start: 9*60+25, end:10*60+45,  dayIdx:0, time:"10:00 - 12:00 pm" },
+      { start:10*60+50, end:12*60+10,  dayIdx:0, time:"12:00 - 02:00 pm" },
+      { start:12*60+15, end:13*60+35,  dayIdx:0, time:"02:00 - 04:00 pm" },
+      { start:13*60+40, end:15*60,     dayIdx:1, time:"08:00 - 10:00 am" },
+      { start:15*60+5,  end:16*60+25,  dayIdx:1, time:"10:00 - 12:00 pm" },
+      { start:16*60+30, end:17*60+50,  dayIdx:1, time:"12:00 - 02:00 pm" }
+    ];
+
+    let selected = JSON.parse(localStorage.getItem("selectedCourses") || "{}");
+    function saveSelected() {
+      localStorage.setItem("selectedCourses", JSON.stringify(selected));
+    }
+
+    function timeToMin(str) {
+      let [hm, ap] = str.split(" ");
+      let [h, m] = hm.split(":").map(Number);
+      if (ap.toLowerCase() === "pm" && h !== 12) h += 12;
+      if (ap.toLowerCase() === "am" && h === 12) h = 0;
+      return h * 60 + m;
+    }
+    function parseTimeRange(r) {
+      if (!r || typeof r !== 'string') return [NaN, NaN]; 
+
+      r = r.replace(/\s+/g, ' ').trim();
+
+      let [s, e] = r.split(" - ").map(x => x.trim()),
+          m = e.match(/(am|pm)/i)?.[0].toLowerCase();
+
+      if (m) {
+        if (!/(am|pm)/i.test(s)) s += " " + m; 
+        if (!/(am|pm)/i.test(e)) e += " " + m; 
+      }
+
+      let start = timeToMin(s),
+          end = timeToMin(e);
+
+      if (isNaN(start) || isNaN(end)) {
+        console.error(`Invalid time range: ${r}`);
+        return [NaN, NaN];
+      }
+      
+      if (start > end) start -= 12 * 60; 
+      
+      return [start, end];
+    }
+
+    function normalizeDayToken(day) {
+      const raw = (day || '').toString().trim().toLowerCase().replace(/\./g, '');
+      const map = {
+        sun: 'Sun', sunday: 'Sun',
+        mon: 'Mon', monday: 'Mon',
+        tue: 'Tue', tues: 'Tue', tuesday: 'Tue',
+        wed: 'Wed', weds: 'Wed', wednesday: 'Wed',
+        thu: 'Thu', thur: 'Thu', thurs: 'Thu', thursday: 'Thu',
+        fri: 'Fri', friday: 'Fri',
+        sat: 'Sat', saturday: 'Sat'
+      };
+      return map[raw] || (day || '').toString().trim();
+    }
+
+
+
+
+	  
+    
+	function extractDays(courseObj) {
+  const isLab = courseObj.isLab;
+
+  // For lab sections, try to read day codes from the teacher field first
+  if (isLab && courseObj.teacher) {
+    const insideParens = courseObj.teacher.match(/\(([^)]*)\)/)?.[1];
+
+    if (insideParens) {
+      const tokens = insideParens
+        .split(/[,/&\s]+/)
+        .map(t => t.trim())
+        .filter(Boolean);
+
+      const dayMap = {
+        S: 'Sun',
+        SUN: 'Sun',
+        SUNDAY: 'Sun',
+
+        M: 'Mon',
+        MON: 'Mon',
+        MONDAY: 'Mon',
+
+        T: 'Tue',
+        TUE: 'Tue',
+        TUES: 'Tue',
+        TUESDAY: 'Tue',
+
+        W: 'Wed',
+        WED: 'Wed',
+        WEDNESDAY: 'Wed',
+
+        TH: 'Thu',
+        THU: 'Thu',
+        THUR: 'Thu',
+        THURS: 'Thu',
+        THURSDAY: 'Thu',
+
+        F: 'Fri',
+        FRI: 'Fri',
+        FRIDAY: 'Fri',
+
+        SA: 'Sat',
+        SAT: 'Sat',
+        SATURDAY: 'Sat'
+      };
+
+      const days = tokens
+        .map(t => dayMap[t.toUpperCase()])
+        .filter(Boolean);
+
+      if (days.length) {
+        return [...new Set(days)];
+      }
+    }
+  }
+
+  // If days are wrapped in <mark>, read each marked day
+  if (courseObj.days && courseObj.days.includes("<mark>")) {
+    let tmp = document.createElement("div");
+    tmp.innerHTML = courseObj.days;
+    return [...tmp.querySelectorAll("mark")].map(x => normalizeDayToken(x.textContent));
+  }
+
+  // Normal case
+  return (courseObj.days || "")
+    .split("&")
+    .map(x => normalizeDayToken(x));
+}
+
+
+
+
+
+
+    
+
+
+
+    
+    function mergeTimeSlots(timeSlotStrings) {
+      if (!Array.isArray(timeSlotStrings) || timeSlotStrings.length === 0) {
+        return [];
+      }
+
+      const parsedSlots = timeSlotStrings.map(slot => {
+        const [start, end] = parseTimeRange(slot);
+        return { original: slot, start, end };
+      }).filter(slot => !isNaN(slot.start) && !isNaN(slot.end));
+
+      if (parsedSlots.length === 0) {
+        return [];
+      }
+
+      parsedSlots.sort((a, b) => a.start - b.start);
+
+      const merged = [];
+      let currentMerge = parsedSlots[0];
+
+      for (let i = 1; i < parsedSlots.length; i++) {
+        const nextSlot = parsedSlots[i];
+        if (nextSlot.start <= currentMerge.end + 5) { 
+          currentMerge.end = Math.max(currentMerge.end, nextSlot.end); 
+        } else {
+          merged.push({ start: currentMerge.start, end: currentMerge.end });
+          currentMerge = nextSlot; 
+        }
+      }
+      merged.push({ start: currentMerge.start, end: currentMerge.end }); 
+
+      const formatMinToTime = (min) => {
+        let hh = Math.floor(min / 60);
+        let mm = min % 60;
+        let period = "am";
+        if (hh >= 12) period = "pm";
+        if (hh > 12) hh -= 12;
+        if (hh === 0) hh = 12; 
+        return `${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')} ${period}`;
+      };
+
+      return merged.map(slot => `${formatMinToTime(slot.start)} - ${formatMinToTime(slot.end)}`);
+    }
+
+    
+
+
+
+
+
+
+
+
+
+    
+
+    function findConflict(newE, courseKey) {
+      const newETimeSlots = Array.isArray(newE.time) ? newE.time : [newE.time];
+      const nd = extractDays(newE); 
+
+      for (let c in selected) {
+        if (c === courseKey) continue; 
+
+        let e = selected[c]; 
+        const existingTimeSlots = Array.isArray(e.time) ? e.time : [e.time];
+        const ed = extractDays(e); 
+
+        for (const newSlotStr of newETimeSlots) {
+          let [ns, ne] = parseTimeRange(newSlotStr);
+          if (isNaN(ns) || isNaN(ne)) continue; 
+
+          for (const existingSlotStr of existingTimeSlots) {
+            let [es, ee] = parseTimeRange(existingSlotStr);
+            if (isNaN(es) || isNaN(ee)) continue; 
+
+            let day = nd.find(d => ed.includes(d)); 
+            if (day && ns < ee && es < ne) { 
+              let os = Math.max(ns, es),
+                  oe = Math.min(ne, ee),
+                  fmt = m => {
+                    let hh = Math.floor(m/60), mm = m % 60, pp = hh >= 12;
+                    if (hh > 12) hh -= 12;
+                    if (hh === 0) hh = 12;
+                    return `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')} ${pp ? 'pm' : 'am'}`;
+                  };
+              return { course: c, section: e.section, day, time: `${fmt(os)} - ${fmt(oe)}` };
+            }
+          }
+        }
+      }
+      return false;
+    }
+
+    const selContainer = document.querySelector(".selected-container");
+    const selGrid = document.getElementById("selected-courses");
+    const summaryContainer = document.getElementById("daily-schedule-summary");
+    const schedContainer = document.getElementById("schedule-container");
+
+    function renderSelected() {
+      selGrid.innerHTML = "";
+      for (let k in selected) {
+        let e = selected[k],
+            isLab = e.isLab, 
+            times = Array.isArray(e.time) ? e.time.join(", ") : e.time,
+            isGefSpecial = isGef1101Family(k),
+            specialTime = formatGefDayTimePairs(e.dayTimePairs),
+            examInfo = isLab
+                ? "No exam"
+                : (() => {
+                    let [st] = parseTimeRange(Array.isArray(e.time) ? e.time[0] : e.time), 
+                        rule = examRules.find(r => r.start === st);
+                    if (!rule) return "Exam time TBD";
+                    let day = extractDays(e)[rule.dayIdx] || "TBD"; 
+                    return `Exam: ${day}, ${rule.time}`;
+                  })(),
+            card = document.createElement("div");
+
+        card.className = "selected-card";
+        card.innerHTML = `
+          <h3>${k}</h3>
+          <p>Section: ${e.section}</p>
+          <p>Room: ${e.room}</p>
+          <p>Teacher: ${e.teacher}</p>
+          <p>Days: ${e.days}</p>
+          ${isGefSpecial && specialTime ? `<p>${specialTime}</p>` : `<p>Time: ${times}</p>`}
+          <p><strong>${examInfo}</strong></p>
+          <button class="delete-btn"><i class="fas fa-trash"></i></button>
+        `;
+        card.querySelector(".delete-btn").onclick = () => {
+          Swal.fire({
+            icon: 'warning', title: 'Remove Course?',
+            text: `Delete ${k}?`, showCancelButton: true,
+            confirmButtonText: 'Yes', cancelButtonText: 'No'
+          }).then(res => {
+            if (res.isConfirmed) {
+              delete selected[k];
+              saveSelected();
+              renderSelected();
+              renderSchedule();
+              Swal.fire({
+                icon: 'success',
+                title: 'Deleted',
+                toast: true,
+                position: 'top',
+                timer: 1200,
+                showConfirmButton: false
+              });
+            }
+          });
+        };
+        selGrid.appendChild(card);
+      }
+      renderDailyScheduleSummary();
+      updatePanelsVisibility();
+      if (window.renderShareControls) {
+          window.renderShareControls();
+      }
+    }
+
+    function renderDailyScheduleSummary() {
+      const summaryContainer = document.getElementById("daily-schedule-summary");
+      if (!summaryContainer) return;
+
+      const dayTimes = {};
+
+      for (let key in selected) {
+        const entry = selected[key]; 
+        const timeSlots = Array.isArray(entry.time) ? entry.time : [entry.time];
+        const classDays = extractDays(entry); 
+
+        for (let day of classDays) {
+          if (!dayTimes[day]) {
+            dayTimes[day] = [];
+          }
+          timeSlots.forEach(slot => {
+            const [start, end] = parseTimeRange(slot); 
+            dayTimes[day].push([start, end]);
+          });
+        }
+      }
+
+      const formatTime = (min) => {
+        let hh = Math.floor(min / 60),
+            mm = min % 60,
+            ap = hh >= 12 ? "pm" : "am";
+        if (hh > 12) hh -= 12;
+        if (hh === 0) hh = 12;
+        return `${String(hh).padStart(2, "0")}:${String(mm).padStart(2, "0")} ${ap}`;
+      };
+
+      summaryContainer.innerHTML = "<h3>Daily Class Summary</h3>";
+      Object.entries(dayTimes).forEach(([day, times]) => {
+        const sortedTimes = times.sort((a, b) => a[0] - b[0]);
+        const earliest = sortedTimes[0][0];
+        const latest = sortedTimes[sortedTimes.length - 1][1];
+
+        summaryContainer.innerHTML += `<p><strong>${day}:</strong> ${formatTime(earliest)} - ${formatTime(latest)}</p>`;
+      });
+    }
+
+    function renderSchedule() {
+      schedContainer.innerHTML = "";
+      for (let courseKey in data) { 
+        let box = document.createElement("div");
+        box.className = "course";
+        box.innerHTML = `<h2>${courseKey}</h2><div class="card-container"></div>`;
+        let cc = box.querySelector(".card-container");
+
+        data[courseKey].forEach(entry => { 
+          let isSel = selected[courseKey]?.section === entry.section,
+              card = document.createElement("div");
+          card.className = "card";
+
+          const isGefSpecial = isGef1101Family(courseKey);
+          const displayTime = Array.isArray(entry.time) ? entry.time.join(", ") : entry.time;
+          const specialTime = formatGefDayTimePairs(entry.dayTimePairs);
+
+          card.innerHTML = `
+            <input type="checkbox" ${isSel ? "checked" : ""}>
+            <div class="info">
+              <span class="tag">Section:</span> ${entry.section}
+              <span class="tag">Room:</span> ${entry.room}
+              <span class="tag">Teacher:</span> ${entry.teacher} - ${teacherFull[entry.teacher.split(" ")[0]] || "Unknown"}
+              <span class="tag">Days:</span> ${entry.days}
+              ${isGefSpecial && specialTime ? specialTime : `<span class="tag">Time:</span> ${displayTime}`}
+            </div>
+          `;
+          let cb = card.querySelector("input");
+          cb.onchange = () => {
+            let newE = entry; 
+
+            if (!cb.checked) {
+              delete selected[courseKey];
+              saveSelected();
+              renderSelected();
+              renderSchedule();
+              return Swal.fire({
+                icon: 'success',
+                title: 'Removed',
+                toast: true,
+                position: 'top',
+                timer: 1200,
+                showConfirmButton: false
+              });
+            }
+            
+            let conf = findConflict(newE, courseKey); 
+            if (conf) {
+              cb.checked = false;
+              return Swal.fire({
+                icon: 'error',
+                title: 'Conflict',
+                html: `Clashes with <strong>${conf.course} Sec ${conf.section}</strong><br>
+                       On <strong>${conf.day}</strong> at <strong>${conf.time}</strong>`
+              });
+            }
+            if (selected[courseKey] && selected[courseKey].section !== newE.section) {
+              return Swal.fire({
+                icon: 'warning',
+                title: 'Replace Section?',
+                text: `You have Sec ${selected[courseKey].section}. Replace with Sec ${newE.section}?`,
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No'
+              }).then(res => {
+                if (res.isConfirmed) {
+                  selected[courseKey] = newE; 
+                  saveSelected();
+                  renderSelected();
+                  renderSchedule();
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Replaced',
+                    toast: true,
+                    position: 'top',
+                    timer: 1200,
+                    showConfirmButton: false
+                  });
+                } else {
+                  cb.checked = false;
+                }
+              });
+            } else {
+              selected[courseKey] = newE; 
+              saveSelected();
+              renderSelected();
+              renderSchedule();
+              Swal.fire({
+                icon: 'success',
+                title: 'Saved',
+                toast: true,
+                position: 'top',
+                timer: 1200,
+                showConfirmButton: false
+              });
+            }
+          };
+          cc.appendChild(card);
+        });
+
+        schedContainer.appendChild(box);
+      }
+    }
+
+    function updatePanelsVisibility() {
+      const hasSelection = Object.keys(selected).length > 0;
+      summaryContainer.style.display = hasSelection ? "" : "none";
+      selContainer.style.display = hasSelection ? "" : "none";
+    }
+
+    function normalizeTimeFormat(time) {
+      if (!time || typeof time !== 'string') return null;
+
+      time = time.replace(/\s+/g, ' ').trim();
+
+      if (!/(am|pm)/i.test(time)) {
+        const [start, end] = time.split('-').map(t => t.trim());
+        const startHour = parseInt(start.split(':')[0], 10);
+        const endHour = parseInt(end.split(':')[0], 10);
+
+        if (startHour >= 8 && startHour < 12) {
+          time = `${start} am - ${end} am`;
+        } else if (startHour >= 12 || endHour >= 12) {
+          time = `${start} pm - ${end} pm`;
+        }
+      }
+
+      return time;
+    }
+
+    function isExplicitLabSection(sectionText) {
+      const sec = (sectionText || '').toString().trim();
+      return /\bL\b/i.test(sec) || /L$/i.test(sec);
+    }
+
+    function hasLabLikeDuration(timeSlots, minMinutes = 115) {
+      if (!Array.isArray(timeSlots) || !timeSlots.length) return false;
+      return timeSlots.some(slot => {
+        const [start, end] = parseTimeRange(slot);
+        if (isNaN(start) || isNaN(end)) return false;
+        return (end - start) >= minMinutes;
+      });
+    }
+
+    function isGef1101Family(courseKey) {
+      const k = (courseKey || '').toString().trim().toUpperCase();
+      return k === 'GEF 1101' || k === '0231-000-1101';
+    }
+
+
+
+
+
+function getLabDayFromTeacher(teacherText) {
+  const raw = (teacherText || '').toString();
+  const insideParens = raw.match(/\(([^)]*)\)/)?.[1] || '';
+
+  const tokens = insideParens
+    .split(/[,/&\s]+/)
+    .map(t => t.trim().replace(/\./g, ''))
+    .filter(Boolean);
+
+  const dayMap = {
+    S: 'Sun',
+    SUN: 'Sun',
+    SUNDAY: 'Sun',
+
+    M: 'Mon',
+    MON: 'Mon',
+    MONDAY: 'Mon',
+
+    T: 'Tue',
+    TUE: 'Tue',
+    TUES: 'Tue',
+    TUESDAY: 'Tue',
+
+    W: 'Wed',
+    WED: 'Wed',
+    WEDNESDAY: 'Wed',
+
+    TH: 'Thu',
+    THU: 'Thu',
+    THUR: 'Thu',
+    THURS: 'Thu',
+    THURSDAY: 'Thu',
+
+    F: 'Fri',
+    FRI: 'Fri',
+    FRIDAY: 'Fri',
+
+    SA: 'Sat',
+    SAT: 'Sat',
+    SATURDAY: 'Sat'
+  };
+
+  for (const token of tokens) {
+    const day = dayMap[token.toUpperCase()];
+    if (day) return day;
+  }
+
+  return '';
+} 
+
+
+
+
+	  
+
+    function normalizeEntryDays(courseKey, dayText, teacherText = '', isLab = false) {
+  const raw = (dayText || '').toString().trim();
+  if (!raw) return 'Unknown Days';
+
+  if (isGef1101Family(courseKey) && /ENG\s*LAB\s*&\s*ESK/i.test(raw)) {
+    return 'Thu';
+  }
+
+  if (isLab) {
+  const labDay = getLabDayFromTeacher(teacherText);
+  if (labDay) return labDay;
+  return normalizeDayToken(raw.split('&')[0]);
+}
+
+  return raw
+    .replace(/Sun\s*&\s*Tue/i, 'Sun & Tue')
+    .replace(/Mon\s*&\s*Wed/i, 'Mon & Wed');
+}
+
+	  
+
+    function splitDayTokens(dayText) {
+      const txt = (dayText || '').toString().trim();
+      if (!txt) return [];
+      if (txt.includes('<mark>')) {
+        const tmp = document.createElement('div');
+        tmp.innerHTML = txt;
+        return [...tmp.querySelectorAll('mark')].map(x => x.textContent.trim()).filter(Boolean);
+      }
+      if (txt.includes('&')) return txt.split('&').map(x => x.trim()).filter(Boolean);
+      return [txt];
+    }
+
+    function mergeDayLabels(existingDays, incomingDays) {
+      const order = ['Sun', 'Monday', 'Mon', 'Tuesday', 'Tue', 'Wednesday', 'Wed', 'Thu', 'Thursday', 'Fri', 'Friday', 'Sat', 'Saturday'];
+      const seen = new Set();
+      [...splitDayTokens(existingDays), ...splitDayTokens(incomingDays)].forEach(d => {
+        if (d) seen.add(d);
+      });
+      const arr = Array.from(seen);
+      arr.sort((a, b) => {
+        const ai = order.findIndex(o => o.toLowerCase() === a.toLowerCase());
+        const bi = order.findIndex(o => o.toLowerCase() === b.toLowerCase());
+        const av = ai === -1 ? 999 : ai;
+        const bv = bi === -1 ? 999 : bi;
+        return av - bv;
+      });
+      return arr.join(' & ');
+    }
+
+    function formatGefDayTimePairs(dayTimePairs) {
+      if (!Array.isArray(dayTimePairs) || !dayTimePairs.length) return '';
+      return dayTimePairs.map(p => {
+        const d = (p.days || '').trim();
+        const times = Array.isArray(p.time) ? p.time.join(', ') : (p.time || '');
+        if (!d || !times) return '';
+        const label = /^Thu$/i.test(d) ? 'Thu (Listening & Speaking)' : d;
+        return `<span><span class="tag">${label}:</span> ${times}</span>`;
+      }).filter(Boolean).join('');
+    }
+
+    function validateAndNormalizeData(courseData) {
+      const normalizedData = {};
+
+      for (let courseKey in courseData) {
+        if (!Array.isArray(courseData[courseKey])) {
+          console.error(`Invalid data for course ${courseKey}: Expected an array.`);
+          continue;
+        }
+
+        const sectionsMap = {};
+        const courseHasExplicitLabSection = courseData[courseKey].some(entry => {
+          if (!Array.isArray(entry) || entry.length < 1) return false;
+          return isExplicitLabSection(entry[0] || '');
+        });
+
+        courseData[courseKey].forEach(entry => {
+          if (!Array.isArray(entry) || entry.length < 5) {
+            console.error(`Invalid entry in ${courseKey}:`, entry);
+            return; 
+          }
+
+          let rawSection = entry[0] || 'Unknown Section';
+          let normalizedSection = rawSection.replace(/\s*L$/i, '').trim();
+
+          let timeSlots = [];
+          if (entry[4].includes(",")) {
+            timeSlots = entry[4].split(',').map(t => normalizeTimeFormat(t.trim()));
+          } else {
+            timeSlots = [normalizeTimeFormat(entry[4])];
+          }
+          timeSlots = timeSlots.filter(Boolean);
+
+          const explicitLab = courseKey.toLowerCase().includes("lab") || isExplicitLabSection(rawSection);
+          const inferredLab = !explicitLab && courseHasExplicitLabSection && hasLabLikeDuration(timeSlots);
+          const isLabEntry = explicitLab || inferredLab;
+
+          if (sectionsMap[normalizedSection]) {
+            sectionsMap[normalizedSection].time = sectionsMap[normalizedSection].time.concat(timeSlots);
+            sectionsMap[normalizedSection].isLab = sectionsMap[normalizedSection].isLab || isLabEntry;
+            sectionsMap[normalizedSection].dayTimePairs.push({
+              days: normalizeEntryDays(courseKey, entry[3] || 'Unknown Days', entry[2] || 'Unknown Teacher', isLabEntry),
+              time: timeSlots
+            });
+            sectionsMap[normalizedSection].days = mergeDayLabels(
+              sectionsMap[normalizedSection].days,
+              normalizeEntryDays(courseKey, entry[3] || 'Unknown Days', entry[2] || 'Unknown Teacher', isLabEntry)
+            );
+          } else {
+            sectionsMap[normalizedSection] = {
+              section: rawSection, 
+              room: entry[1] || 'Unknown Room',
+              teacher: entry[2] || 'Unknown Teacher',
+              days: normalizeEntryDays(courseKey, entry[3] || 'Unknown Days', entry[2] || 'Unknown Teacher', isLabEntry),
+              time: timeSlots, 
+              isLab: isLabEntry,
+              courseKey: courseKey,
+              dayTimePairs: [{
+                days: normalizeEntryDays(courseKey, entry[3] || 'Unknown Days', entry[2] || 'Unknown Teacher', isLabEntry),
+                time: timeSlots
+              }]
+            };
+          }
+        });
+
+        normalizedData[courseKey] = Object.values(sectionsMap).map(sectionEntry => {
+          if (sectionEntry.isLab) { 
+            sectionEntry.time = mergeTimeSlots(sectionEntry.time);
+          }
+          if (!Array.isArray(sectionEntry.time)) {
+             sectionEntry.time = [sectionEntry.time];
+          }
+          return sectionEntry;
+        });
+      }
+
+      return normalizedData;
+    }
+
+    function buildCourseIdCandidates(inputId) {
+      const source = (inputId || '').toString().trim();
+      if (!source) return [];
+
+      const candidates = [];
+      const add = (v) => {
+        const val = (v || '').trim();
+        if (!val) return;
+        if (!candidates.includes(val)) candidates.push(val);
+      };
+
+      const upper = source.toUpperCase().replace(/\s+/g, ' ').trim();
+      add(source);
+      add(upper);
+
+      // Try existing-course formats: CSE2104 <-> CSE 2104
+      const compact = upper.replace(/\s+/g, '');
+      const existingMatch = compact.match(/^([A-Z]{2,4})(\d{3,4}(?:-[A-Z])?[A-Z]?)$/);
+      if (existingMatch) {
+        add(`${existingMatch[1]} ${existingMatch[2]}`);
+        add(`${existingMatch[1]}${existingMatch[2]}`);
+      }
+
+      // Try UNESCO formats with normalized hyphen groups.
+      const unescoDigits = upper.replace(/\s*[- ]\s*/g, '-');
+      const unescoMatch = unescoDigits.match(/^(\d{3,4})-(\d{3})-(\d{3,4})$/);
+      if (unescoMatch) {
+        add(`${unescoMatch[1]}-${unescoMatch[2]}-${unescoMatch[3]}`);
+      }
+
+      return candidates;
+    }
+
+    async function loadCourseJSON(courseId) {
+      const candidates = buildCourseIdCandidates(courseId);
+
+      for (const candidate of candidates) {
+        try {
+          let response = await fetch(`${encodeURIComponent(candidate)}.json`);
+          if (!response.ok) {
+            continue;
+          }
+
+          let json = await response.json();
+          const validatedData = validateAndNormalizeData(json);
+
+          for (let key in validatedData) {
+            data[key] = validatedData[key];
+          }
+          return candidate;
+        } catch (err) {
+          console.error(`Failed to load ${candidate}.json:`, err);
+        }
+      }
+
+      console.error(`Could not resolve JSON for input: ${courseId}`);
+      return null;
+    }
+
+    async function promptForCourses() {
+      let added = [];
+
+      const allCourseCodes = (typeof COURSE_DATA !== 'undefined')
+        ? Array.from(new Set(Object.keys(COURSE_DATA).map(k => k.trim()).filter(Boolean))).sort((a, b) => a.localeCompare(b))
+        : [];
+
+      const buildSuggestions = (query, limit = 30) => {
+        const q = (query || '').trim().toUpperCase();
+        if (!q) return allCourseCodes.slice(0, limit);
+
+        const startsWith = [];
+        const includes = [];
+        for (const code of allCourseCodes) {
+          const upper = code.toUpperCase();
+          if (upper.startsWith(q)) {
+            startsWith.push(code);
+          } else if (upper.includes(q)) {
+            includes.push(code);
+          }
+          if ((startsWith.length + includes.length) >= limit) break;
+        }
+        return startsWith.concat(includes).slice(0, limit);
+      };
+
+      while (true) {
+        let { value: courseId } = await Swal.fire({
+          title: 'Add a course',
+          input: 'text',
+          inputPlaceholder: 'Enter course ID (e.g. CSE 2101)',
+          didOpen: () => {
+            const input = Swal.getInput();
+            if (!input) return;
+
+            // Prevent browser history/autofill suggestions from appearing.
+            input.setAttribute('autocomplete', 'off');
+            input.setAttribute('autocorrect', 'off');
+            input.setAttribute('autocapitalize', 'off');
+            input.setAttribute('spellcheck', 'false');
+            input.name = `course-code-${Date.now()}`;
+
+            const listId = 'course-code-suggestions';
+            let dl = document.getElementById(listId);
+            if (dl) dl.remove();
+
+            dl = document.createElement('datalist');
+            dl.id = listId;
+            document.body.appendChild(dl);
+            input.setAttribute('list', listId);
+
+            const refreshList = () => {
+              const suggestions = buildSuggestions(input.value);
+              dl.innerHTML = suggestions.map(code => `<option value="${code}"></option>`).join('');
+            };
+
+            refreshList();
+            input.addEventListener('input', refreshList);
+          },
+          showCancelButton: true,
+          inputValidator: (value) => {
+            if (!value) return 'Course ID cannot be empty';
+            return null;
+          }
+        });
+        if (!courseId) break; 
+        courseId = courseId.trim();
+        let resolvedId = await loadCourseJSON(courseId);
+        if (resolvedId) {
+          added.push(resolvedId);
+          Swal.fire({
+            icon: 'success',
+            title: `${resolvedId}.json loaded`,
+            toast: true,
+            position: 'top',
+            timer: 1200,
+            showConfirmButton: false
+          });
+        } else {
+          await Swal.fire({
+            icon: 'error',
+	    title: `Bro, Wait! Read this carefully.`,
+            //title: `Could not find ${courseId}.Read this carefully!`,
+            text: 'Please check the filename and try again. For Unesco Course Code write with hyphen. Example : 0200-017-1301. And for Regular Course Code write with gap. Example : CSE 2301'
+          });
+        }
+        let { isConfirmed } = await Swal.fire({
+          icon: 'question',
+          title: 'Add another course?',
+          showCancelButton: true,
+          confirmButtonText: 'Yes',
+          cancelButtonText: 'No'
+        });
+        if (!isConfirmed) break;
+      }
+      if (added.length > 0) {
+        let stored = JSON.parse(localStorage.getItem('addedCourses') || '[]');
+        let unique = Array.from(new Set([...stored, ...added]));
+        localStorage.setItem('addedCourses', JSON.stringify(unique));
+      }
+      toggleAddCourseButton(true); 
+    }
+
+    function toggleAddCourseButton(show) {
+      const addCourseBtn = document.getElementById("add-course-btn");
+      addCourseBtn.style.display = show ? "flex" : "none";
+    }
+
+    document.getElementById("add-course-btn").addEventListener("click", async () => {
+      await promptForCourses();
+      renderSelected();
+      renderSchedule();
+    });
+
+    async function loadAllStoredCourses() {
+      let stored = JSON.parse(localStorage.getItem('addedCourses') || '[]');
+      for (let cid of stored) {
+        await loadCourseJSON(cid);
+      }
+    }
+
+    async function showWhatsAppPopup() {
+        const maxShows = 1;
+        const key = 'whatsapp_popup_count';
+        const joinedKey = 'whatsapp_joined';
+
+        if (localStorage.getItem(joinedKey) === 'yes') {
+            return;
+			await handleSharedLink();
+        }
+
+        let count = parseInt(localStorage.getItem(key)) || 0;
+
+        if (count < maxShows) {
+            const result = await Swal.fire({
+                title: 'Join Our WhatsApp Community',
+                text: 'Get updates, ask questions and get help whenever you’re stuck.',
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonText: 'Join Now',
+                cancelButtonText: 'Not Now',
+                confirmButtonColor: '#25D366',
+                reverseButtons: false
+            });
+
+            if (result.isConfirmed) {
+                localStorage.setItem(joinedKey, 'yes');
+                window.open('https://chat.whatsapp.com/B9vRwSqcdCHG36Bso5EMjS?mode=wwt', '_blank');
+				await handleSharedLink();
+            } else {
+                localStorage.setItem(key, count + 1);
+				await handleSharedLink();
+            }
+        }
+    }
+
+    window.__appInitialized = false;
+    window.initApp = async function() {
+      if (window.__appInitialized) return;
+      window.__appInitialized = true;
+
+      await showWhatsAppPopup();
+
+      let stored = JSON.parse(localStorage.getItem('addedCourses') || '[]');
+      if (stored.length === 0) {
+        await promptForCourses();
+      } else {
+        toggleAddCourseButton(true); 
+      }
+      await loadAllStoredCourses();
+      renderSelected();
+      renderSchedule();
+    };
+
+    // Fallback: if share.js is missing or does not call initApp, initialize here.
+    setTimeout(() => {
+      if (!window.__appInitialized) {
+        window.initApp();
+      }
+    }, 50);
+
+
+  </script>
+
+<script>
+function restartApp() {
+  Swal.fire({
+    icon: 'warning',
+    title: 'Restart App?',
+    text: 'This will reset all data and reload the app.',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, restart',
+    cancelButtonText: 'Cancel'
+  }).then(result => {
+    if (result.isConfirmed) {
+      localStorage.clear();
+      location.reload();
+    }
+  });
+}
+</script>
+</body>
+</html>
+
+
+  </script>
