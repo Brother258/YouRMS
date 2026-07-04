@@ -130,9 +130,20 @@
     <div class="spinner"></div>
   </div>
 
-  <script>
-    // Redirect immediately
-    window.location.href = "https://theyourms.github.io";
-  </script>
+<script>
+(function () {
+    const currentHost = window.location.hostname.toLowerCase();
+
+    if (currentHost === "yourms.netlify.app") {
+        const newUrl =
+            "https://theyourms.github.io" +
+            window.location.pathname +
+            window.location.search +
+            window.location.hash;
+
+        window.location.replace(newUrl);
+    }
+})();
+</script> 
 </body>
 </html> 
